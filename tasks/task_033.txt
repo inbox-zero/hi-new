@@ -1,0 +1,11 @@
+# Task ID: 33
+# Title: Refine Data Refresh on Manage Link Page (Task 28)
+# Status: pending
+# Dependencies: None
+# Priority: low
+# Description: Part of Task 28. Improve the `handleDeliveryOptionAdded` callback (and similar for edit/delete) on the 'Manage Link' page to use Next.js `revalidatePath` or `revalidateTag` for more targeted data refreshing, instead of relying only on `noStore()`.
+# Details:
+
+
+# Test Strategy:
+

@@ -1,0 +1,11 @@
+# Task ID: 30
+# Title: Implement Delete Delivery Option Functionality (Task 28)
+# Status: pending
+# Dependencies: None
+# Priority: medium
+# Description: Part of Task 28. Develop UI (e.g., delete button with confirmation) and server action to allow users to delete specific delivery options from their Links.
+# Details:
+
+
+# Test Strategy:
+

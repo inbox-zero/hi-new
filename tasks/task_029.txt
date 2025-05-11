@@ -1,0 +1,11 @@
+# Task ID: 29
+# Title: Implement Edit Delivery Option Functionality (Task 28)
+# Status: pending
+# Dependencies: None
+# Priority: medium
+# Description: Part of Task 28. Develop UI and server action to allow users to edit existing delivery options (type, destination, active status) for their Links. Webhook secrets should not be directly editable.
+# Details:
+
+
+# Test Strategy:
+

@@ -96,3 +96,4 @@ also we use pnpm and not npm
 43. we dont use server actions to get data. we use GET. server actions are POST
 44. you needed to import the types from "@/generated/prisma". prisma changed @prisma-best-practices.mdc 
 45. Given your interest in the core link functionality, would you like to start working on the "Manage Link" page, specifically focusing on allowing users to add Delivery Options (Email/Webhook) to their links? This seems like a very logical next piece. - yes
+46. update task list. and add new tasks we need to do next

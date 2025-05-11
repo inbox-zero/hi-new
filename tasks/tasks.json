@@ -393,6 +393,61 @@
       ],
       "priority": "high",
       "subtasks": []
+    },
+    {
+      "id": 29,
+      "title": "Implement Edit Delivery Option Functionality (Task 28)",
+      "description": "Part of Task 28. Develop UI and server action to allow users to edit existing delivery options (type, destination, active status) for their Links. Webhook secrets should not be directly editable.",
+      "details": "",
+      "testStrategy": "",
+      "status": "pending",
+      "dependencies": [],
+      "priority": "medium",
+      "subtasks": []
+    },
+    {
+      "id": 30,
+      "title": "Implement Delete Delivery Option Functionality (Task 28)",
+      "description": "Part of Task 28. Develop UI (e.g., delete button with confirmation) and server action to allow users to delete specific delivery options from their Links.",
+      "details": "",
+      "testStrategy": "",
+      "status": "pending",
+      "dependencies": [],
+      "priority": "medium",
+      "subtasks": []
+    },
+    {
+      "id": 31,
+      "title": "Implement Edit Link Label Functionality (Task 28)",
+      "description": "Part of Task 28. Provide UI on the 'Manage Link' page for users to edit the internal 'label' of their Link. Implement server action to update the label.",
+      "details": "",
+      "testStrategy": "",
+      "status": "pending",
+      "dependencies": [],
+      "priority": "low",
+      "subtasks": []
+    },
+    {
+      "id": 32,
+      "title": "Implement Delete Link Functionality (Task 28)",
+      "description": "Part of Task 28. Provide UI for users to delete an entire Link (with confirmation). Implement server action to delete the Link and its associated delivery options.",
+      "details": "",
+      "testStrategy": "",
+      "status": "pending",
+      "dependencies": [],
+      "priority": "medium",
+      "subtasks": []
+    },
+    {
+      "id": 33,
+      "title": "Refine Data Refresh on Manage Link Page (Task 28)",
+      "description": "Part of Task 28. Improve the `handleDeliveryOptionAdded` callback (and similar for edit/delete) on the 'Manage Link' page to use Next.js `revalidatePath` or `revalidateTag` for more targeted data refreshing, instead of relying only on `noStore()`.",
+      "details": "",
+      "testStrategy": "",
+      "status": "pending",
+      "dependencies": [],
+      "priority": "low",
+      "subtasks": []
     }
   ]
 }
