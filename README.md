@@ -89,3 +89,4 @@ also we use pnpm and not npm
 36. we need to add the contact form. and POST request for people to call via api. find the task for it
 37. yes. but we also need to support POST requests to that url. can that be done in nextjs?
 38. update tasks first. then we can do resend stuff
+39. i added textarea already. you can do resend

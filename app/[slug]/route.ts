@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { ContactFormSchema, type ContactFormValues } from "@/lib/schemas/contact";
-// We will need Resend or another email provider later
-// import { Resend } from \"resend\";
-// const resend = new Resend(process.env.RESEND_API_KEY);
+import { type ContactFormValues, ContactFormSchema } from "@/lib/schemas/contact";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+// Ensure you have a default "from" email address configured, e.g., from your domain
+const DEFAULT_FROM_EMAIL = process.env.DEFAULT_FROM_EMAIL || "onboarding@resend.dev"; // Fallback, replace with your verified Resend domain email
 
 export async function POST(
   request: NextRequest,
@@ -38,7 +40,7 @@ export async function POST(
     }
 
     if (!link.deliveryOptions || link.deliveryOptions.length === 0) {
-      // Even if the link exists, if there are no active delivery options, it\'s like a dead end.
+      // Even if the link exists, if there are no active delivery options, it's like a dead end.
       // You might want to log this or handle it differently.
       console.warn(`No active delivery options for link: ${slug}`);
       return NextResponse.json(
@@ -47,29 +49,64 @@ export async function POST(
       );
     }
 
-    // TODO: Implement message processing and delivery to each option
-    // For each deliveryOption in link.deliveryOptions:
-    //   - If type is EMAIL, send email via Resend
-    //   - If type is WEBHOOK, POST to destination URL
-    //   - Implement queuing and retries for reliability (advanced)
+    const deliveryPromises = [];
 
-    console.log(`Message received for link ${slug}:`, { senderName, senderEmail, message, deliveryOptions: link.deliveryOptions });
+    for (const option of link.deliveryOptions) {
+      if (option.type === "EMAIL") {
+        console.log(`Attempting to send email to: ${option.destination} for link: ${slug}`);
+        deliveryPromises.push(
+          resend.emails.send({
+            from: DEFAULT_FROM_EMAIL,
+            to: option.destination,
+            subject: `New message via hi.new/${slug} from ${senderName}`,
+            replyTo: senderEmail,
+            html: `<p><strong>Name:</strong> ${senderName}</p><p><strong>Email:</strong> ${senderEmail}</p><p><strong>Message:</strong></p><p>${message.replace(/\n/g, "<br>")}</p>`,
+          }).then(response => {
+            if (response.error) {
+              console.error(`Resend error for ${option.destination}:`, response.error);
+              return { success: false, destination: option.destination, error: response.error.message };
+            }
+            console.log(`Email sent successfully to: ${option.destination}`);
+            return { success: true, destination: option.destination };
+          }).catch(error => {
+            console.error(`Failed to send email to ${option.destination}:`, error);
+            return { success: false, destination: option.destination, error: error.message };
+          })
+        );
+      } else if (option.type === "WEBHOOK") {
+        // TODO: Implement webhook POST logic
+        console.log(`Webhook delivery to: ${option.destination} (Not implemented yet)`);
+        // deliveryPromises.push(fetch(option.destination, { method: "POST", body: JSON.stringify({ senderName, senderEmail, message, source: `hi.new/${slug}` }), headers: {"Content-Type": "application/json"}}));
+      }
+    }
 
-    // For now, just return success
+    if (deliveryPromises.length === 0) {
+      // This case means no EMAIL options were found and processed
+      return NextResponse.json(
+          { success: false, error: "No email delivery options were processed for this link." },
+          { status: 400 } 
+      );
+    }
+
+    const results = await Promise.allSettled(deliveryPromises);
+    const successfullySent = results.some(r => r.status === 'fulfilled' && r.value && r.value.success);
+
+    if (successfullySent) {
+      return NextResponse.json(
+        { success: true, message: "Message processed. Some deliveries may have succeeded." },
+        { status: 200 }
+      );
+    }
+    // If !successfullySent (i.e., all attempted email deliveries failed or only non-email types were present and not processed)
     return NextResponse.json(
-      { success: true, message: "Message received. Processing will begin shortly." },
-      { status: 200 }
+      { success: false, error: "Failed to deliver message to configured email destinations." },
+      { status: 500 }
     );
 
   } catch (error) {
     console.error(`Error processing POST request for slug ${slug}:`, error);
     let errorMessage = "An unexpected error occurred.";
-    if (error instanceof Error) {
-        errorMessage = error.message;
-    }
-    return NextResponse.json(
-      { success: false, error: errorMessage },
-      { status: 500 }
-    );
+    if (error instanceof Error) { errorMessage = error.message; }
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }
 } 
