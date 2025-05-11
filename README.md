@@ -75,6 +75,5 @@ Now the basic set up is done here's what I did next:
 23. TM: "did you do a lot of copy paste code for the sign up and sign. can we fix that?"
 24. TM: "i like react hook form and zod for validation"
 25. Fixed bug with styling/Tailwind myself
-25. TM: "i like react hook form and zod for validation
-also we dont have google login. just keep it simple with username/pw for now.
-update tasks"
+26. TM: "i like react hook form and zod for validation. also we dont have google login. just keep it simple with username/pw for now. update tasks"
+27. TM: "fix lint errors"
