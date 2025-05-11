@@ -85,3 +85,7 @@ Now the basic set up is done here's what I did next:
 33. replace new prisma() in the whole project
 34. /Generate Cursor Rules for some of the stuff we've learnt here. like how to use prisma and how to shadcn install components with the correct syntax: pnpm dlx shadcn-ui@latest add form
 also we use pnpm and not npm
+35. ok keep going on our tasks
+36. we need to add the contact form. and POST request for people to call via api. find the task for it
+37. yes. but we also need to support POST requests to that url. can that be done in nextjs?
+38. update tasks first. then we can do resend stuff
