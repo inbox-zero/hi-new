@@ -1,11 +1,37 @@
 # Task ID: 6
 # Title: Implement POST Endpoint for Message Submission
-# Status: pending
+# Status: in-progress
 # Dependencies: 1, 3, 5
 # Priority: high
-# Description: Create a POST endpoint at hi.new/{username} to accept structured JSON data.
+# Description: Create a POST endpoint at hi.new/{slug} to accept structured JSON data.
 # Details:
-Build Next.js API route for POST requests. Parse and validate incoming JSON. Store message details for delivery.
+The POST handler in app/[slug]/route.ts has been created with Zod validation using ContactFormSchema. The handler successfully fetches the Link and its active DeliveryOptions. Next steps include implementing the actual delivery logic for email (via Resend) and webhook POSTs, along with robust error handling and retry mechanisms for failed deliveries.
 
 # Test Strategy:
-Test endpoint with valid and invalid payloads. Verify validation, error handling, and response format.
+Test endpoint with valid and invalid payloads. Verify validation error responses for malformed data. Test successful message processing flow. Implement tests for delivery mechanisms and error recovery scenarios.
+
+# Subtasks:
+## 6.1. Implement delivery logic for email via Resend [pending]
+### Dependencies: None
+### Description: Create the functionality to deliver validated messages to recipients via email using Resend API
+### Details:
+
+
+## 6.2. Implement webhook POST delivery [pending]
+### Dependencies: None
+### Description: Create the functionality to deliver validated messages to webhook endpoints via POST requests
+### Details:
+
+
+## 6.3. Implement error handling and retry mechanisms [pending]
+### Dependencies: None
+### Description: Add robust error handling for delivery failures and implement retry logic for transient errors
+### Details:
+
+
+## 6.4. Add comprehensive delivery logging [pending]
+### Dependencies: None
+### Description: Implement logging for all delivery attempts, successes, and failures to aid in debugging and monitoring
+### Details:
+
+

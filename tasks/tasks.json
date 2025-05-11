@@ -132,17 +132,42 @@
     {
       "id": 6,
       "title": "Implement POST Endpoint for Message Submission",
-      "description": "Create a POST endpoint at hi.new/{username} to accept structured JSON data.",
-      "details": "Build Next.js API route for POST requests. Parse and validate incoming JSON. Store message details for delivery.",
-      "testStrategy": "Test endpoint with valid and invalid payloads. Verify validation, error handling, and response format.",
-      "priority": "high",
+      "description": "Create a POST endpoint at hi.new/{slug} to accept structured JSON data.",
+      "status": "in-progress",
       "dependencies": [
         1,
         3,
         5
       ],
-      "status": "pending",
-      "subtasks": []
+      "priority": "high",
+      "details": "The POST handler in app/[slug]/route.ts has been created with Zod validation using ContactFormSchema. The handler successfully fetches the Link and its active DeliveryOptions. Next steps include implementing the actual delivery logic for email (via Resend) and webhook POSTs, along with robust error handling and retry mechanisms for failed deliveries.",
+      "testStrategy": "Test endpoint with valid and invalid payloads. Verify validation error responses for malformed data. Test successful message processing flow. Implement tests for delivery mechanisms and error recovery scenarios.",
+      "subtasks": [
+        {
+          "id": 6.1,
+          "title": "Implement delivery logic for email via Resend",
+          "description": "Create the functionality to deliver validated messages to recipients via email using Resend API",
+          "status": "pending"
+        },
+        {
+          "id": 6.2,
+          "title": "Implement webhook POST delivery",
+          "description": "Create the functionality to deliver validated messages to webhook endpoints via POST requests",
+          "status": "pending"
+        },
+        {
+          "id": 6.3,
+          "title": "Implement error handling and retry mechanisms",
+          "description": "Add robust error handling for delivery failures and implement retry logic for transient errors",
+          "status": "pending"
+        },
+        {
+          "id": 6.4,
+          "title": "Add comprehensive delivery logging",
+          "description": "Implement logging for all delivery attempts, successes, and failures to aid in debugging and monitoring",
+          "status": "pending"
+        }
+      ]
     },
     {
       "id": 7,
