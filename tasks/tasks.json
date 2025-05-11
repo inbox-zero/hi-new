@@ -22,7 +22,73 @@
         1
       ],
       "status": "pending",
-      "subtasks": []
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Install Better Auth Package",
+          "description": "Add Better Auth to both client and server parts of the project",
+          "dependencies": [],
+          "details": "Install the Better Auth package using npm, yarn, or other package manager in both client and server parts of the project",
+          "status": "done",
+          "testStrategy": "Verify package installation by checking package.json and node_modules"
+        },
+        {
+          "id": 2,
+          "title": "Configure Environment Variables",
+          "description": "Set up required environment variables for Better Auth",
+          "dependencies": [
+            1
+          ],
+          "details": "Create a .env file in the project root and add necessary environment variables including a secret key and base URL",
+          "status": "done",
+          "testStrategy": "Confirm environment variables are properly loaded in the application"
+        },
+        {
+          "id": 3,
+          "title": "Create Auth Instance",
+          "description": "Initialize Better Auth instance in the application",
+          "dependencies": [
+            2
+          ],
+          "details": "Create an auth.ts file in the appropriate location (project root, lib/, or utils/ folder) to import Better Auth and create the auth instance",
+          "status": "done",
+          "testStrategy": "Verify the auth instance is properly exported and accessible"
+        },
+        {
+          "id": 4,
+          "title": "Set Up Database Configuration",
+          "description": "Configure database for storing user authentication data",
+          "dependencies": [
+            3
+          ],
+          "details": "Configure Better Auth to use SQLite, PostgreSQL, MySQL, or another database through Kysely or appropriate adapters",
+          "status": "done",
+          "testStrategy": "Test database connection and verify schema creation"
+        },
+        {
+          "id": 5,
+          "title": "Create API Handler for Authentication",
+          "description": "Implement route handler for authentication API requests",
+          "dependencies": [
+            3,
+            4
+          ],
+          "details": "Set up a route handler to serve POST and GET requests to the /api/auth endpoint using the handler provided by Better Auth",
+          "status": "done",
+          "testStrategy": "Test API endpoints for authentication functionality"
+        },
+        {
+          "id": 6,
+          "title": "Implement Authentication Flows",
+          "description": "Create signup, login, and logout functionality in the application",
+          "dependencies": [
+            5
+          ],
+          "details": "Implement user interface components and logic for signup, login, and logout flows, and secure API routes with authentication middleware",
+          "status": "pending",
+          "testStrategy": "Test complete authentication flows including signup, login, logout, and secured route access"
+        }
+      ]
     },
     {
       "id": 3,

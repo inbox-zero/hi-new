@@ -63,3 +63,9 @@ Now the basic set up is done here's what I did next:
   - `npx prisma init --datasource-provider postgresql --output ../generated/prisma`
 12. Reverted Prisma to v6.6 to run `npx @better-auth/cli@latest generate`
 13. Removed some tasks from the task list
+14. TM: "i initialised the schema now. let's keep going and mark relevant tasks as done"
+15. Handled env vars
+16. TM: "keep going. i want a basic frontend working"
+17. TM: "here's a shadcn login form we can add. make sure shadcn is set up too" (shared shadcn code block too)
+18. `pnpm dlx shadcn@latest init`
+19. TM: "this is how we add shadcn components nowadays: 'pnpm dlx shadcn@latest add button'"
