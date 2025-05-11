@@ -69,3 +69,12 @@ Now the basic set up is done here's what I did next:
 17. TM: "here's a shadcn login form we can add. make sure shadcn is set up too" (shared shadcn code block too)
 18. `pnpm dlx shadcn@latest init`
 19. TM: "this is how we add shadcn components nowadays: 'pnpm dlx shadcn@latest add button'"
+20. TM: "ok i did it. we're using react. not vue fyi. let's keep going in our work. we had some errors on login form"
+21. Added Better Auth docs to Cursor
+22. TM: "@BetterAuth here are the docs to help you"
+23. TM: "did you do a lot of copy paste code for the sign up and sign. can we fix that?"
+24. TM: "i like react hook form and zod for validation"
+25. Fixed bug with styling/Tailwind myself
+25. TM: "i like react hook form and zod for validation
+also we dont have google login. just keep it simple with username/pw for now.
+update tasks"

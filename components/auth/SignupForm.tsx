@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AuthCardLayout from "./AuthCardLayout"; // Import the new layout
 
-export default function LoginForm() { // Removed className and ...props as they are handled by AuthCardLayout
+export default function SignupForm() { // Removed className and ...props
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,15 +20,16 @@ export default function LoginForm() { // Removed className and ...props as they 
     setIsLoading(true);
 
     try {
-      const result = await authClient.signIn.email({
+      const result = await authClient.signUp.email({
+        name,
         email,
         password,
       });
 
       if (result.error) {
-        setError(result.error.message || "Login failed. Please try again.");
+        setError(result.error.message || "Signup failed. Please try again.");
       } else {
-        window.location.href = "/dashboard";
+        window.location.href = "/dashboard"; 
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -42,14 +44,26 @@ export default function LoginForm() { // Removed className and ...props as they 
 
   return (
     <AuthCardLayout
-      title="Login"
-      description="Enter your email below to login to your account"
-      footerText="Don&apos;t have an account?"
-      footerLinkText="Sign up"
-      footerLinkHref="/signup"
+      title="Create an account"
+      description="Enter your details below to create your account"
+      footerText="Already have an account?"
+      footerLinkText="Login"
+      footerLinkHref="/login"
     >
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-6">
+          <div className="grid gap-2">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Your Name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={isLoading}
+            />
+          </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -63,15 +77,7 @@ export default function LoginForm() { // Removed className and ...props as they 
             />
           </div>
           <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
-              <a
-                href="/forgot-password"
-                className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-              >
-                Forgot your password?
-              </a>
-            </div>
+            <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               type="password"
@@ -85,11 +91,8 @@ export default function LoginForm() { // Removed className and ...props as they 
             <p className="text-sm text-red-600 text-center">{error}</p>
           )}
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Logging in..." : "Login"}
+            {isLoading ? "Creating account..." : "Create account"}
           </Button>
-          {/* <Button variant="outline" className="w-full" disabled={isLoading} onClick={() => alert("Google login not implemented yet")}>
-            Login with Google
-          </Button> */}
         </div>
       </form>
     </AuthCardLayout>
