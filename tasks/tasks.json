@@ -387,7 +387,7 @@
       "description": "Develop a system that enables authenticated users to create, view, and manage globally unique Links (hi.new/slug), including UI for link creation, listing, and configuration of DeliveryOptions.",
       "details": "Implement a user interface allowing authenticated users to input a custom slug and optional label for new Links. On submission, validate the slug on the server for correct format (e.g., allowed characters, length) and check for global uniqueness before saving the Link to the database, associating it with the current user. Develop a UI component to list all Links owned by the user, displaying slug, label, and relevant metadata. Provide functionality for users to configure DeliveryOptions for each Link, which may include settings such as delivery method, scheduling, or access controls. Ensure all operations are protected by authentication (dependent on Task 2). Consider edge cases such as slug collisions, input sanitization, and error handling. Design the system for scalability and maintainability, with clear separation between UI, server logic, and data access layers.",
       "testStrategy": "Verify that only authenticated users can access link management features. Test link creation with valid and invalid slugs, ensuring slugs are globally unique and correctly validated. Confirm that new Links are saved and associated with the correct user. Check that the user's Links are accurately listed in the UI, and that DeliveryOptions can be configured and saved for each Link. Test error handling for duplicate slugs, invalid input, and unauthorized access. Perform end-to-end tests covering the full workflow: authentication, link creation, listing, and DeliveryOptions configuration.",
-      "status": "pending",
+      "status": "in-progress",
       "dependencies": [
         2
       ],
@@ -400,7 +400,7 @@
       "description": "Part of Task 28. Develop UI and server action to allow users to edit existing delivery options (type, destination, active status) for their Links. Webhook secrets should not be directly editable.",
       "details": "",
       "testStrategy": "",
-      "status": "pending",
+      "status": "done",
       "dependencies": [],
       "priority": "medium",
       "subtasks": []
@@ -411,7 +411,7 @@
       "description": "Part of Task 28. Develop UI (e.g., delete button with confirmation) and server action to allow users to delete specific delivery options from their Links.",
       "details": "",
       "testStrategy": "",
-      "status": "pending",
+      "status": "done",
       "dependencies": [],
       "priority": "medium",
       "subtasks": []
@@ -422,7 +422,7 @@
       "description": "Part of Task 28. Provide UI on the 'Manage Link' page for users to edit the internal 'label' of their Link. Implement server action to update the label.",
       "details": "",
       "testStrategy": "",
-      "status": "pending",
+      "status": "done",
       "dependencies": [],
       "priority": "low",
       "subtasks": []
@@ -433,7 +433,7 @@
       "description": "Part of Task 28. Provide UI for users to delete an entire Link (with confirmation). Implement server action to delete the Link and its associated delivery options.",
       "details": "",
       "testStrategy": "",
-      "status": "pending",
+      "status": "done",
       "dependencies": [],
       "priority": "medium",
       "subtasks": []

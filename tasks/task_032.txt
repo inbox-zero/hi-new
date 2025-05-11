@@ -1,6 +1,6 @@
 # Task ID: 32
 # Title: Implement Delete Link Functionality (Task 28)
-# Status: pending
+# Status: done
 # Dependencies: None
 # Priority: medium
 # Description: Part of Task 28. Provide UI for users to delete an entire Link (with confirmation). Implement server action to delete the Link and its associated delivery options.

@@ -100,3 +100,4 @@ also we use pnpm and not npm
 46. update task list. and add new tasks we need to do next
 47. tasks 29-32
 48. use lucide for icons
+49. list tasks. then update task statuses
