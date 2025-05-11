@@ -105,16 +105,29 @@
     {
       "id": 5,
       "title": "Implement GET Endpoint for Contact Form",
-      "description": "Create a GET endpoint at hi.new/{username} to display a simple contact form.",
-      "details": "Build Next.js API route for GET requests. Render a minimalist contact form. Ensure mobile responsiveness and accessibility.",
-      "testStrategy": "Test endpoint accessibility, form rendering, and mobile responsiveness. Validate WCAG compliance.",
-      "priority": "high",
+      "description": "Create a GET endpoint at hi.new/{slug} to display a simple contact form.",
+      "status": "in-progress",
       "dependencies": [
         1,
         3
       ],
-      "status": "pending",
-      "subtasks": []
+      "priority": "high",
+      "details": "The dynamic page `app/[slug]/page.tsx` has been created and successfully fetches Link data. It renders the `ContactForm` component. The page uses Next.js dynamic routing to handle different usernames via the slug parameter. The page receives the slug parameter through the params object passed as a prop to the page component.",
+      "testStrategy": "Test endpoint accessibility, form rendering, and mobile responsiveness. Validate WCAG compliance. Verify that the dynamic routing works correctly with different slug values. Ensure the Link data is properly fetched and displayed.",
+      "subtasks": [
+        {
+          "id": 5.1,
+          "title": "UI Polish",
+          "description": "Complete final UI polish for the contact form page",
+          "status": "pending"
+        },
+        {
+          "id": 5.2,
+          "title": "Integrate Message Sending Status",
+          "description": "Integrate actual message sending status from the POST handler if needed on this page",
+          "status": "pending"
+        }
+      ]
     },
     {
       "id": 6,

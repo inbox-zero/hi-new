@@ -1,11 +1,25 @@
 # Task ID: 5
 # Title: Implement GET Endpoint for Contact Form
-# Status: pending
+# Status: in-progress
 # Dependencies: 1, 3
 # Priority: high
-# Description: Create a GET endpoint at hi.new/{username} to display a simple contact form.
+# Description: Create a GET endpoint at hi.new/{slug} to display a simple contact form.
 # Details:
-Build Next.js API route for GET requests. Render a minimalist contact form. Ensure mobile responsiveness and accessibility.
+The dynamic page `app/[slug]/page.tsx` has been created and successfully fetches Link data. It renders the `ContactForm` component. The page uses Next.js dynamic routing to handle different usernames via the slug parameter. The page receives the slug parameter through the params object passed as a prop to the page component.
 
 # Test Strategy:
-Test endpoint accessibility, form rendering, and mobile responsiveness. Validate WCAG compliance.
+Test endpoint accessibility, form rendering, and mobile responsiveness. Validate WCAG compliance. Verify that the dynamic routing works correctly with different slug values. Ensure the Link data is properly fetched and displayed.
+
+# Subtasks:
+## 5.1. UI Polish [pending]
+### Dependencies: None
+### Description: Complete final UI polish for the contact form page
+### Details:
+
+
+## 5.2. Integrate Message Sending Status [pending]
+### Dependencies: None
+### Description: Integrate actual message sending status from the POST handler if needed on this page
+### Details:
+
+
