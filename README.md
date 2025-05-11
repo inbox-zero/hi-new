@@ -81,3 +81,6 @@ Now the basic set up is done here's what I did next:
 29. TM: "i ran prisma generate. keep going"
 30. lets take a step back. a user should be able to create multiple links / contact forms. they could go to different bots or emails
 31. no you got it wrong. all links are: hi.new/LINK a user could have 10 of those though
+32. how to use prisma with nextjs: @https://www.prisma.io/docs/orm/more/help-and-troubleshooting/nextjs-help stop doing new prisma client in each file
+33. replace new prisma() in the whole project
+34. 

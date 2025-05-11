@@ -1,11 +1,12 @@
 "use server";
 
 import { auth } from "@/lib/auth"; // Your Better Auth instance
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
-import { CreateLinkSchema, type CreateLinkFormValues } from "@/lib/schemas/link";
-
-const prisma = new PrismaClient();
+import {
+  CreateLinkSchema,
+  type CreateLinkFormValues,
+} from "@/lib/schemas/link";
 
 export async function createLinkAction(values: CreateLinkFormValues) {
   try {
@@ -17,7 +18,10 @@ export async function createLinkAction(values: CreateLinkFormValues) {
     // Validate input against Zod schema (already done client-side, but good practice for server actions)
     const validationResult = CreateLinkSchema.safeParse(values);
     if (!validationResult.success) {
-      return { success: false, error: validationResult.error.errors.map(e => e.message).join(", ") };
+      return {
+        success: false,
+        error: validationResult.error.errors.map((e) => e.message).join(", "),
+      };
     }
 
     const { slug, label } = validationResult.data;
@@ -28,7 +32,10 @@ export async function createLinkAction(values: CreateLinkFormValues) {
     });
 
     if (existingLink) {
-      return { success: false, error: "This link slug is already taken. Please choose another." };
+      return {
+        success: false,
+        error: "This link slug is already taken. Please choose another.",
+      };
     }
 
     // Create the new link
@@ -40,14 +47,17 @@ export async function createLinkAction(values: CreateLinkFormValues) {
       },
     });
 
-    return { success: true, message: "Link created successfully!", link: newLink };
-
+    return {
+      success: true,
+      message: "Link created successfully!",
+      link: newLink,
+    };
   } catch (error) {
     console.error("Error in createLinkAction:", error);
     let errorMessage = "An unexpected error occurred while creating the link.";
     if (error instanceof Error) {
-        errorMessage = error.message;
+      errorMessage = error.message;
     }
     return { success: false, error: errorMessage };
   }
-} 
+}
