@@ -1,0 +1,26 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+\
+---
+description: Specifies the correct command for adding ShadCN UI components using pnpm.
+globs: package.json, components/**/*.tsx, app/**/*.tsx
+alwaysApply: true
+---
+
+- **Adding ShadCN UI Components**: To add new ShadCN UI components to the project, use the following command format, replacing `{component_name}` with the actual component you need (e.g., `button`, `card`, `form`):
+    ```bash
+    pnpm dlx shadcn-ui@latest add {component_name}
+    ```
+
+- **Initialization**: If ShadCN UI has not been initialized in the project yet, first run:
+    ```bash
+    pnpm dlx shadcn-ui@latest init
+    ```
+    Follow the prompts to configure TypeScript, style, base color, etc.
+
+- **Check `components.json`**: Ensure that the `[components.json](mdc:components.json)` file is configured correctly, as this is used by the ShadCN UI CLI.
+
+- **Component Location**: Added components will typically be placed in the `[components/ui](mdc:components/ui)` directory.

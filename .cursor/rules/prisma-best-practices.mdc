@@ -1,0 +1,33 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+\
+---
+description: Enforces using a singleton Prisma Client and correct migration/generation commands.
+globs: *.ts, *.tsx, prisma/schema.prisma
+alwaysApply: true
+---
+
+- **Singleton Prisma Client**: Always use the singleton Prisma Client instance from `[lib/prisma.ts](mdc:lib/prisma.ts)` for database operations. Do not instantiate `new PrismaClient()` directly in server actions, API routes, or other files.
+    - **Reasoning**: Prevents multiple database connection pools, which can exhaust resources and cause errors, especially in a Next.js development environment with hot-reloading.
+    - **Example Import**:
+      ```typescript
+      import { prisma } from "@/lib/prisma";
+      ```
+
+- **Database Migrations**:
+    - After making changes to `[prisma/schema.prisma](mdc:prisma/schema.prisma)`, create and apply a database migration using:
+      ```bash
+      pnpm exec prisma migrate dev --name your_migration_name
+      ```
+    - Use descriptive migration names.
+
+- **Prisma Client Generation**:
+    - After any schema change and successful migration, or if your Prisma Client types seem out of sync, regenerate the Prisma Client using:
+      ```bash
+      pnpm exec prisma generate
+      ```
+
+- **Refer to Official Documentation** for complex scenarios: [Using Prisma ORM with Next.js](https://www.prisma.io/docs/orm/more/help-and-troubleshooting/nextjs-help)

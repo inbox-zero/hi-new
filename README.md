@@ -83,4 +83,5 @@ Now the basic set up is done here's what I did next:
 31. no you got it wrong. all links are: hi.new/LINK a user could have 10 of those though
 32. how to use prisma with nextjs: @https://www.prisma.io/docs/orm/more/help-and-troubleshooting/nextjs-help stop doing new prisma client in each file
 33. replace new prisma() in the whole project
-34. 
+34. /Generate Cursor Rules for some of the stuff we've learnt here. like how to use prisma and how to shadcn install components with the correct syntax: pnpm dlx shadcn-ui@latest add form
+also we use pnpm and not npm
