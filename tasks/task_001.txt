@@ -1,0 +1,11 @@
+# Task ID: 1
+# Title: Setup Project Repository
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize the project repository with Next.js, Tailwind CSS, and Prisma ORM.
+# Details:
+Create a new Next.js project. Install Tailwind CSS for styling. Set up Prisma ORM for database interactions. Configure basic project structure and version control.
+
+# Test Strategy:
+Verify project setup by running a basic Next.js page and checking Prisma connection to a local PostgreSQL instance.

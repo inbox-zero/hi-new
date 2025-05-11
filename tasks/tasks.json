@@ -1,0 +1,299 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Setup Project Repository",
+      "description": "Initialize the project repository with Next.js, Tailwind CSS, and Prisma ORM.",
+      "details": "Create a new Next.js project. Install Tailwind CSS for styling. Set up Prisma ORM for database interactions. Configure basic project structure and version control.",
+      "testStrategy": "Verify project setup by running a basic Next.js page and checking Prisma connection to a local PostgreSQL instance.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 2,
+      "title": "Configure Authentication with Better Auth",
+      "description": "Integrate Better Auth for user authentication and management.",
+      "details": "Set up Better Auth provider. Implement signup, login, and logout flows. Secure API routes with authentication middleware.",
+      "testStrategy": "Test user registration, login, and protected route access. Verify session management and error handling.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 3,
+      "title": "Design and Implement User Data Model",
+      "description": "Define and implement the User data model in Prisma.",
+      "details": "Create Prisma schema for User, including username, email, apiKey, deliveryOptions, organization, referrals, createdAt, and updatedAt fields. Generate and run migrations.",
+      "testStrategy": "Test CRUD operations on User model. Validate uniqueness constraints and field types.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 4,
+      "title": "Build Username Claiming System",
+      "description": "Implement username claiming during signup.",
+      "details": "Add username field to signup form. Validate uniqueness and format. Store claimed username in User model.",
+      "testStrategy": "Test username validation, uniqueness, and assignment during signup. Verify error messages for taken usernames.",
+      "priority": "high",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 5,
+      "title": "Implement GET Endpoint for Contact Form",
+      "description": "Create a GET endpoint at hi.new/{username} to display a simple contact form.",
+      "details": "Build Next.js API route for GET requests. Render a minimalist contact form. Ensure mobile responsiveness and accessibility.",
+      "testStrategy": "Test endpoint accessibility, form rendering, and mobile responsiveness. Validate WCAG compliance.",
+      "priority": "high",
+      "dependencies": [
+        1,
+        3,
+        4
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 6,
+      "title": "Implement POST Endpoint for Message Submission",
+      "description": "Create a POST endpoint at hi.new/{username} to accept structured JSON data.",
+      "details": "Build Next.js API route for POST requests. Parse and validate incoming JSON. Store message details for delivery.",
+      "testStrategy": "Test endpoint with valid and invalid payloads. Verify validation, error handling, and response format.",
+      "priority": "high",
+      "dependencies": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 7,
+      "title": "Integrate Resend for Email Delivery",
+      "description": "Set up Resend for forwarding messages to email.",
+      "details": "Configure Resend API. Implement email template. Send email on message submission. Handle delivery status.",
+      "testStrategy": "Test email delivery with various inputs. Verify delivery status and error handling.",
+      "priority": "high",
+      "dependencies": [
+        1,
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 8,
+      "title": "Implement Basic Rate Limiting",
+      "description": "Add rate limiting to prevent abuse of endpoints.",
+      "details": "Implement IP-based rate limiting for anonymous requests. Use Upstash for distributed rate limiting if needed.",
+      "testStrategy": "Test rate limiting by exceeding limits and verifying error responses.",
+      "priority": "medium",
+      "dependencies": [
+        1,
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 9,
+      "title": "Design and Implement DeliveryOption Model",
+      "description": "Define and implement the DeliveryOption data model in Prisma.",
+      "details": "Create Prisma schema for DeliveryOption, including userId, type (EMAIL, WEBHOOK), destination, active, createdAt, and updatedAt fields. Generate and run migrations.",
+      "testStrategy": "Test CRUD operations on DeliveryOption model. Validate relationships and field types.",
+      "priority": "medium",
+      "dependencies": [
+        1,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 10,
+      "title": "Build User Settings for Delivery Options",
+      "description": "Allow users to configure multiple delivery destinations.",
+      "details": "Create UI for managing delivery options. Allow adding, editing, and removing email/webhook destinations. Store in DeliveryOption model.",
+      "testStrategy": "Test UI flows for managing delivery options. Verify persistence and validation.",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        3,
+        9
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 11,
+      "title": "Implement Webhook Delivery",
+      "description": "Add support for forwarding messages to webhook endpoints.",
+      "details": "Extend message processing to send payloads to configured webhook URLs. Handle response codes and retries.",
+      "testStrategy": "Test webhook delivery with various endpoints. Verify retry logic and error handling.",
+      "priority": "medium",
+      "dependencies": [
+        6,
+        9,
+        10
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 12,
+      "title": "Integrate Upstash Redis for Message Queueing",
+      "description": "Set up Upstash Redis for reliable message delivery.",
+      "details": "Configure Upstash Redis. Queue messages for delivery. Implement worker to process queue.",
+      "testStrategy": "Test message queuing and processing. Verify delivery order and error handling.",
+      "priority": "medium",
+      "dependencies": [
+        1,
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 13,
+      "title": "Implement Retry Mechanism for Failed Deliveries",
+      "description": "Add retry logic for failed message deliveries.",
+      "details": "Store failed messages in temporary storage (PendingMessage model). Schedule retries with exponential backoff.",
+      "testStrategy": "Test retry logic by simulating delivery failures. Verify retry scheduling and success.",
+      "priority": "medium",
+      "dependencies": [
+        6,
+        12
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 14,
+      "title": "Design and Implement PendingMessage Model",
+      "description": "Define and implement the PendingMessage data model in Prisma.",
+      "details": "Create Prisma schema for PendingMessage, including recipient, sender, senderEmail, message, metadata, attempts, nextAttempt, createdAt, and updatedAt fields. Generate and run migrations.",
+      "testStrategy": "Test CRUD operations on PendingMessage model. Validate relationships and field types.",
+      "priority": "medium",
+      "dependencies": [
+        1,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 15,
+      "title": "Implement API Key Generation and Management",
+      "description": "Generate and manage API keys for programmatic access.",
+      "details": "Add API key generation to user settings. Store keys securely. Allow users to revoke and regenerate keys.",
+      "testStrategy": "Test API key generation, usage, and revocation. Verify security and uniqueness.",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 21,
+      "title": "Implement Premium Username System",
+      "description": "Restrict short usernames (≤4 characters) to premium users.",
+      "details": "Add validation for username length. Implement upgrade flow for premium usernames. Store premium status in User model.",
+      "testStrategy": "Test username validation and upgrade flow. Verify premium status persistence.",
+      "priority": "low",
+      "dependencies": [
+        3,
+        4
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 23,
+      "title": "Integrate Subscription Billing",
+      "description": "Add subscription management for premium features.",
+      "details": "Integrate payment provider (e.g., Stripe). Implement subscription creation, renewal, and cancellation.",
+      "testStrategy": "Test subscription flows. Verify payment processing and status updates.",
+      "priority": "low",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 24,
+      "title": "Implement Referral Program",
+      "description": "Add referral tracking and rewards.",
+      "details": "Create Referral model. Track referrals and rewards. Display referral status in user settings.",
+      "testStrategy": "Test referral tracking and reward assignment. Verify UI updates.",
+      "priority": "low",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 25,
+      "title": "Add Analytics for Endpoint Usage",
+      "description": "Track and display endpoint usage statistics.",
+      "details": "Implement analytics collection for message delivery. Display usage stats in user dashboard.",
+      "testStrategy": "Test analytics collection and display. Verify data accuracy.",
+      "priority": "low",
+      "dependencies": [
+        6,
+        12
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 26,
+      "title": "Implement Advanced Spam Prevention",
+      "description": "Add additional spam detection and prevention measures.",
+      "details": "Integrate spam detection libraries. Add CAPTCHA or other anti-spam measures to contact form.",
+      "testStrategy": "Test spam detection and prevention. Verify effectiveness and user experience.",
+      "priority": "low",
+      "dependencies": [
+        5,
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 27,
+      "title": "Add Custom Form Styling Options",
+      "description": "Allow users to customize the appearance of their contact form.",
+      "details": "Add UI for form styling. Store preferences in User model. Apply styles to endpoint UI.",
+      "testStrategy": "Test form styling UI and application. Verify persistence and rendering.",
+      "priority": "low",
+      "dependencies": [
+        2,
+        3,
+        5
+      ],
+      "status": "pending",
+      "subtasks": []
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Implement POST Endpoint for Message Submission
+# Status: pending
+# Dependencies: 1, 3, 4, 5
+# Priority: high
+# Description: Create a POST endpoint at hi.new/{username} to accept structured JSON data.
+# Details:
+Build Next.js API route for POST requests. Parse and validate incoming JSON. Store message details for delivery.
+
+# Test Strategy:
+Test endpoint with valid and invalid payloads. Verify validation, error handling, and response format.

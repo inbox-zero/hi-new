@@ -1,0 +1,11 @@
+# Task ID: 15
+# Title: Implement API Key Generation and Management
+# Status: pending
+# Dependencies: 2, 3
+# Priority: medium
+# Description: Generate and manage API keys for programmatic access.
+# Details:
+Add API key generation to user settings. Store keys securely. Allow users to revoke and regenerate keys.
+
+# Test Strategy:
+Test API key generation, usage, and revocation. Verify security and uniqueness.

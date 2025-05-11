@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: Design and Implement User Data Model
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Define and implement the User data model in Prisma.
+# Details:
+Create Prisma schema for User, including username, email, apiKey, deliveryOptions, organization, referrals, createdAt, and updatedAt fields. Generate and run migrations.
+
+# Test Strategy:
+Test CRUD operations on User model. Validate uniqueness constraints and field types.

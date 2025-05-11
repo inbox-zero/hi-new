@@ -1,0 +1,11 @@
+# Task ID: 9
+# Title: Design and Implement DeliveryOption Model
+# Status: pending
+# Dependencies: 1, 3
+# Priority: medium
+# Description: Define and implement the DeliveryOption data model in Prisma.
+# Details:
+Create Prisma schema for DeliveryOption, including userId, type (EMAIL, WEBHOOK), destination, active, createdAt, and updatedAt fields. Generate and run migrations.
+
+# Test Strategy:
+Test CRUD operations on DeliveryOption model. Validate relationships and field types.

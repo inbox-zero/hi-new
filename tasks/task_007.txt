@@ -1,0 +1,11 @@
+# Task ID: 7
+# Title: Integrate Resend for Email Delivery
+# Status: pending
+# Dependencies: 1, 6
+# Priority: high
+# Description: Set up Resend for forwarding messages to email.
+# Details:
+Configure Resend API. Implement email template. Send email on message submission. Handle delivery status.
+
+# Test Strategy:
+Test email delivery with various inputs. Verify delivery status and error handling.

@@ -58,9 +58,9 @@ node_modules/
 *.sln
 *.sw?
 # OS specific
-# Task files
-tasks.json
-tasks/ 
+# Task files - build in public
+# tasks.json
+# tasks/ 
 
 # prisma
 generated/prisma/

@@ -1,0 +1,11 @@
+# Task ID: 25
+# Title: Add Analytics for Endpoint Usage
+# Status: pending
+# Dependencies: 6, 12
+# Priority: low
+# Description: Track and display endpoint usage statistics.
+# Details:
+Implement analytics collection for message delivery. Display usage stats in user dashboard.
+
+# Test Strategy:
+Test analytics collection and display. Verify data accuracy.

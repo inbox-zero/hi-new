@@ -1,0 +1,11 @@
+# Task ID: 23
+# Title: Integrate Subscription Billing
+# Status: pending
+# Dependencies: 2, 3
+# Priority: low
+# Description: Add subscription management for premium features.
+# Details:
+Integrate payment provider (e.g., Stripe). Implement subscription creation, renewal, and cancellation.
+
+# Test Strategy:
+Test subscription flows. Verify payment processing and status updates.

@@ -57,6 +57,7 @@ Now the basic set up is done here's what I did next:
 9. TM: "this is how you do it: https://www.better-auth.com/docs/integrations/next"
 10. TM: "this is how we do prisma: https://www.better-auth.com/docs/adapters/prisma"
 11. Add Prisma myself:
+  - npm install @prisma/client
   - npm install prisma --save-dev
   - npx prisma
   - npx prisma init --datasource-provider postgresql --output ../generated/prisma

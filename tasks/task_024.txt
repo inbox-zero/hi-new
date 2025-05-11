@@ -1,0 +1,11 @@
+# Task ID: 24
+# Title: Implement Referral Program
+# Status: pending
+# Dependencies: 2, 3
+# Priority: low
+# Description: Add referral tracking and rewards.
+# Details:
+Create Referral model. Track referrals and rewards. Display referral status in user settings.
+
+# Test Strategy:
+Test referral tracking and reward assignment. Verify UI updates.

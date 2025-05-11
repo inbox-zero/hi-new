@@ -1,0 +1,11 @@
+# Task ID: 11
+# Title: Implement Webhook Delivery
+# Status: pending
+# Dependencies: 6, 9, 10
+# Priority: medium
+# Description: Add support for forwarding messages to webhook endpoints.
+# Details:
+Extend message processing to send payloads to configured webhook URLs. Handle response codes and retries.
+
+# Test Strategy:
+Test webhook delivery with various endpoints. Verify retry logic and error handling.

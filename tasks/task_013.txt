@@ -1,0 +1,11 @@
+# Task ID: 13
+# Title: Implement Retry Mechanism for Failed Deliveries
+# Status: pending
+# Dependencies: 6, 12
+# Priority: medium
+# Description: Add retry logic for failed message deliveries.
+# Details:
+Store failed messages in temporary storage (PendingMessage model). Schedule retries with exponential backoff.
+
+# Test Strategy:
+Test retry logic by simulating delivery failures. Verify retry scheduling and success.

@@ -1,0 +1,11 @@
+# Task ID: 21
+# Title: Implement Premium Username System
+# Status: pending
+# Dependencies: 3, 4
+# Priority: low
+# Description: Restrict short usernames (≤4 characters) to premium users.
+# Details:
+Add validation for username length. Implement upgrade flow for premium usernames. Store premium status in User model.
+
+# Test Strategy:
+Test username validation and upgrade flow. Verify premium status persistence.

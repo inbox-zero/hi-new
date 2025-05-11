@@ -1,0 +1,11 @@
+# Task ID: 10
+# Title: Build User Settings for Delivery Options
+# Status: pending
+# Dependencies: 2, 3, 9
+# Priority: medium
+# Description: Allow users to configure multiple delivery destinations.
+# Details:
+Create UI for managing delivery options. Allow adding, editing, and removing email/webhook destinations. Store in DeliveryOption model.
+
+# Test Strategy:
+Test UI flows for managing delivery options. Verify persistence and validation.
