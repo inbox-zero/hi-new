@@ -1,6 +1,6 @@
 # Task ID: 5
 # Title: Implement GET Endpoint for Contact Form
-# Status: in-progress
+# Status: done
 # Dependencies: 1, 3
 # Priority: high
 # Description: Create a GET endpoint at hi.new/{slug} to display a simple contact form.
@@ -11,13 +11,13 @@ The dynamic page `app/[slug]/page.tsx` has been created and successfully fetches
 Test endpoint accessibility, form rendering, and mobile responsiveness. Validate WCAG compliance. Verify that the dynamic routing works correctly with different slug values. Ensure the Link data is properly fetched and displayed.
 
 # Subtasks:
-## 5.1. UI Polish [pending]
+## 5.1. UI Polish [done]
 ### Dependencies: None
 ### Description: Complete final UI polish for the contact form page
 ### Details:
 
 
-## 5.2. Integrate Message Sending Status [pending]
+## 5.2. Integrate Message Sending Status [done]
 ### Dependencies: None
 ### Description: Integrate actual message sending status from the POST handler if needed on this page
 ### Details:

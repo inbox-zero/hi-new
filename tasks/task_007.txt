@@ -1,6 +1,6 @@
 # Task ID: 7
 # Title: Integrate Resend for Email Delivery
-# Status: pending
+# Status: done
 # Dependencies: 1, 6
 # Priority: high
 # Description: Set up Resend for forwarding messages to email.

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { type ContactFormValues, ContactFormSchema } from "@/lib/schemas/contact";
 import { Resend } from "resend";
@@ -96,7 +96,9 @@ export async function POST(
               try {
                 const errJson = await response.json();
                 errorBody = errJson.message || errJson.error || JSON.stringify(errJson);
-              } catch (_e) { /* ignore if response is not json, renamed e to _e */ }
+              } catch {
+                // ignore if response is not json or parsing fails, errorBody remains as status message
+              }
               console.error(`Webhook error for ${option.destination}: ${errorBody}`);
               return { success: false, type: "WEBHOOK", destination: option.destination, error: errorBody };
             }

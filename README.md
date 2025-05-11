@@ -91,3 +91,4 @@ also we use pnpm and not npm
 38. update tasks first. then we can do resend stuff
 39. i added textarea already. you can do resend
 40. webhook now
+41. lets complete the pending tasks we have like 5,6,7. or update statuses if done
