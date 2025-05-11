@@ -1,0 +1,357 @@
+# Overview
+
+hi.new is a universal contact solution that provides users with a simple, consistent way to receive messages. Each user gets a personal endpoint (hi.new/username) that works identically via web form or API. The core value is simplicity and consistency: one place for anyone to say "hi" to you, with reliable delivery to your preferred destinations.
+
+By focusing on delivery without storing messages, hi.new offers a privacy-first approach that differentiates it from other contact solutions. The service targets individuals seeking a clean contact solution, developers building communication into apps, and privacy-focused users who prefer controlled communication channels.
+
+# Core Features
+
+## 1. Personal Endpoints
+- **What**: Each user gets a personal endpoint at hi.new/{username} 
+- **Why**: Creates a consistent, memorable contact point across platforms
+- **How**: Users claim their username during signup with a first-come, first-served approach
+
+## 2. Dual Interface
+- **What**: Each endpoint works via both web (GET) and API (POST)
+- **Why**: Provides flexibility for both human and programmatic interaction
+- **How**: GET requests show a simple contact form, POST accepts structured JSON data
+
+## 3. Multiple Delivery Options
+- **What**: Users can configure multiple delivery destinations simultaneously
+- **Why**: Ensures messages are always received through preferred channels
+- **How**: Messages can be forwarded to email (via Resend) and/or webhook endpoints
+
+## 4. Organization Structure
+- **What**: Companies can create organization namespaces with subpaths
+- **Why**: Enables teams to manage contact points collectively
+- **How**: Organizations use the format hi.new/org/{orgname}/{team|member}
+
+## 5. Reliable Delivery
+- **What**: Guaranteed message delivery with retry capability
+- **Why**: Ensures no messages are lost during delivery failures
+- **How**: Uses Upstash queues with temporary storage for failed deliveries
+
+## 6. Premium Features
+- **What**: Short usernames (≤4 characters) and white-labeling
+- **Why**: Creates monetization opportunities and premium experience
+- **How**: Available through paid subscriptions or referral program
+
+# User Experience
+
+## User Personas
+
+### 1. Individual Professional
+- Needs a simple contact solution without building a website
+- Values privacy and control over communication
+- Wants messages delivered directly to preferred channels
+
+### 2. Developer
+- Building applications that need to communicate with users
+- Requires a simple, reliable API for sending messages
+- Prefers straightforward implementation with minimal overhead
+
+### 3. Team Manager
+- Needs to coordinate communication across team members
+- Wants centralized management of contact points
+- Requires sharing and permission controls
+
+## Key User Flows
+
+### Individual Signup and Setup
+1. User signs up via Better Auth
+2. Claims username (hi.new/{username})
+3. Configures delivery preferences (email and/or webhook)
+4. Receives API key for programmatic access
+5. Immediately gets functional endpoint
+
+### Receiving Messages (Web Form)
+1. Someone visits hi.new/{username}
+2. Completes simple contact form with name, email, message
+3. Submits form, receives confirmation
+4. Message is delivered to all configured destinations
+5. Failed deliveries are automatically retried
+
+### Organization Setup
+1. User creates an organization
+2. Claims organization namespace (hi.new/org/{orgname})
+3. Creates subpaths for teams or members
+4. Configures shared or individual delivery preferences
+5. Invites team members and assigns permissions
+
+## UI/UX Considerations
+
+- **Minimalist Design**: Clean, simple interfaces without clutter
+- **Fast Experience**: Quick load times and minimal steps
+- **Mobile Optimized**: Fully responsive for all device sizes
+- **Accessibility**: WCAG compliant for all user interfaces
+- **Clear Feedback**: Obvious confirmation when messages are sent
+
+# Technical Architecture
+
+## System Components
+
+### Frontend
+- **Framework**: Next.js with React
+- **Hosting**: Vercel for static assets and server functions
+- **Authentication**: Better Auth for user management
+- **Styling**: Tailwind CSS for minimalist design
+
+### Backend
+- **API Layer**: Next.js API routes with Edge Functions
+- **Database**: PostgreSQL with Prisma ORM
+- **Queuing**: Upstash Redis for message delivery
+- **Email**: Resend for email forwarding
+- **Monitoring**: Basic logging and error tracking
+
+## Data Models
+
+### User
+```
+User {
+  id: UUID
+  username: String (unique)
+  email: String
+  apiKey: String
+  deliveryOptions: DeliveryOptions[]
+  organization: Organization[] (optional)
+  referrals: Referral[]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+```
+
+### DeliveryOption
+```
+DeliveryOption {
+  id: UUID
+  userId: UUID
+  type: Enum (EMAIL, WEBHOOK)
+  destination: String
+  active: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+```
+
+### Organization
+```
+Organization {
+  id: UUID
+  name: String
+  slug: String (unique)
+  ownerId: UUID
+  members: OrganizationMember[]
+  subpaths: OrganizationSubpath[]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+```
+
+### OrganizationSubpath
+```
+OrganizationSubpath {
+  id: UUID
+  organizationId: UUID
+  path: String
+  deliveryOptions: DeliveryOptions[]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+```
+
+### PendingMessage (temporary storage for retries)
+```
+PendingMessage {
+  id: UUID
+  recipient: String
+  sender: String
+  senderEmail: String
+  message: Text
+  metadata: JSON
+  attempts: Number
+  nextAttempt: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+```
+
+## APIs and Integrations
+
+### Public APIs
+- `GET hi.new/{username}` - Contact form
+- `POST hi.new/{username}` - API endpoint for messages
+- `GET hi.new/org/{orgname}/{path?}` - Organization contact form
+
+### Internal APIs
+- `/api/auth/*` - Authentication endpoints via Better Auth
+- `/api/users/*` - User management
+- `/api/organizations/*` - Organization management
+- `/api/messages/*` - Message processing and delivery
+
+### Integrations
+- **Resend**: For email delivery
+- **Upstash**: For queuing and rate limiting
+- **Better Auth**: For authentication
+- **Vercel**: For hosting and edge functions
+
+## Infrastructure Requirements
+
+- **Hosting**: Vercel for application
+- **Database**: PostgreSQL instance (Vercel Postgres)
+- **Queue**: Upstash Redis
+- **Domain**: hi.new with proper DNS configuration
+- **SSL**: Provided by Vercel
+- **Monitoring**: Basic Vercel analytics
+
+# Development Roadmap
+
+## Phase 1: Foundation MVP
+- Basic user authentication with Better Auth
+- Username claiming system
+- Simple contact form (GET endpoint)
+- Basic API endpoint (POST)
+- Single delivery option (email via Resend)
+- Minimal user settings
+- Basic rate limiting
+
+## Phase 2: Enhanced Delivery
+- Multiple delivery destinations (email + webhook)
+- Upstash queue implementation for reliable delivery
+- Temporary storage for failed deliveries
+- Retry mechanism for failed messages
+- Enhanced rate limiting via Upstash
+- API key generation and management
+
+## Phase 3: Organizations
+- Organization creation and management
+- Subpath system for teams and members
+- Permission management for organizations
+- Organization settings and preferences
+- Invitation system for members
+
+## Phase 4: Monetization
+- Premium username system (≤4 characters)
+- White-labeling option to remove branding
+- Subscription billing integration
+- Referral program implementation
+- Usage tracking and limits
+
+## Phase 5: Enhanced Experience
+- Analytics for endpoint usage
+- Advanced spam prevention
+- Custom form styling options
+- Mobile application for notifications
+- Message threading capabilities
+
+# Logical Dependency Chain
+
+## Foundation Layer
+1. **Authentication System**: Implement Better Auth for user management
+2. **Database Schema**: Set up Prisma models for core entities
+3. **Basic Pages**: Create signup, settings, and endpoint pages
+4. **Username System**: Build username claiming and validation
+
+## Core Functionality Layer
+1. **Contact Form**: Implement the GET endpoint with form
+2. **API Endpoint**: Create the POST endpoint for programmatic access
+3. **Message Processing**: Build the message normalization system
+4. **Email Delivery**: Integrate Resend for email forwarding
+
+## Reliability Layer
+1. **Queueing System**: Implement Upstash for message queueing
+2. **Retry Logic**: Build retry mechanism for failed deliveries
+3. **Webhook Delivery**: Add support for webhook destinations
+4. **Multiple Destinations**: Enable delivery to multiple endpoints
+
+## Organization Layer
+1. **Organization Model**: Implement organization data structures
+2. **Subpath System**: Build the path routing for organizations
+3. **Member Management**: Create invitation and permission system
+4. **Organization Settings**: Implement organization-level preferences
+
+## Monetization Layer
+1. **Premium Username System**: Implement restrictions and upgrades
+2. **White-labeling**: Build customization options
+3. **Referral System**: Create referral tracking and rewards
+4. **Subscription Management**: Implement payment processing
+
+# Risks and Mitigations
+
+## Technical Challenges
+
+### Email Delivery Reliability
+- **Risk**: Emails may be marked as spam or bounced
+- **Mitigation**: Proper SPF/DKIM setup, monitoring delivery rates, fallback options
+
+### API Abuse
+- **Risk**: Endpoints could be abused for spam
+- **Mitigation**: Strong rate limiting, IP blocking, and abuse detection
+
+### Scaling Message Queue
+- **Risk**: High volume could overwhelm the queue system
+- **Mitigation**: Implement throttling, prioritization, and scaling strategy
+
+## MVP Scope
+
+### Feature Creep
+- **Risk**: Adding too many features before validating core value
+- **Mitigation**: Strict prioritization, focus on one delivery method initially
+
+### Technical Debt
+- **Risk**: Rushing implementation could create maintenance issues
+- **Mitigation**: Regular code reviews, automated testing, clear documentation
+
+## Resource Constraints
+
+### Development Capacity
+- **Risk**: Limited resources for building full feature set
+- **Mitigation**: Phased approach, clear MVP definition, leverage existing libraries
+
+### Infrastructure Costs
+- **Risk**: Costs could escalate with usage growth
+- **Mitigation**: Resource monitoring, usage limits, efficient infrastructure
+
+# Appendix
+
+## Key Technical Decisions
+
+### Why Prisma Instead of Drizzle
+- Type safety and auto-generated client
+- Mature ecosystem with robust migrations
+- Better documentation and community support
+
+### Message Delivery Approach
+- Prioritizing simplicity with GET/POST endpoints
+- Email forwarding via Resend for reliability
+- No message storage for privacy and simplicity
+
+### Rate Limiting Strategy
+- IP-based limits for anonymous requests
+- API key limits for authenticated requests
+- Upstash for distributed rate limiting
+
+## Technical Specifications
+
+### API Response Format
+```json
+{
+  "success": true,
+  "messageId": "msg_123456",
+  "status": "queued",
+  "timestamp": "2025-05-06T12:34:56Z"
+}
+```
+
+### Error Handling
+```json
+{
+  "success": false,
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "You have exceeded your rate limit",
+    "details": {
+      "reset_at": "2025-05-06T13:00:00Z"
+    }
+  }
+}
+```
