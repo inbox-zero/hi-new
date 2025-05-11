@@ -18,6 +18,8 @@ import type {
 } from "@/generated/prisma";
 import AddDeliveryOptionForm from "@/components/links/AddDeliveryOptionForm";
 import DeliveryOptionItem from "@/components/links/DeliveryOptionItem";
+import EditLinkLabelForm from "@/components/links/EditLinkLabelForm";
+import DeleteLinkButton from "@/components/links/DeleteLinkButton";
 import { unstable_noStore as noStore } from "next/cache";
 
 // Helper type for Link with its delivery options
@@ -58,8 +60,11 @@ export default async function ManageLinkPage({ params }: ManageLinkPageProps) {
     notFound();
   }
 
-  async function handleDeliveryOptionAdded() {
+  async function handleDataChange() {
     "use server";
+    // Currently, noStore() + client-side router.refresh() handles updates.
+    // This server action stub remains if we need server-side revalidation logic later.
+    // For example: revalidatePath(`/dashboard/links/manage/${params.linkId}`);
   }
 
   return (
@@ -79,11 +84,7 @@ export default async function ManageLinkPage({ params }: ManageLinkPageProps) {
             hi.new/{link.slug}
           </Link>
         </p>
-        {link.label && (
-          <p className="text-sm text-muted-foreground mt-1">
-            Label: {link.label}
-          </p>
-        )}
+        <EditLinkLabelForm linkId={link.id} initialLabel={link.label} />
       </div>
 
       {/* Section to Display Existing Delivery Options */}
@@ -109,7 +110,7 @@ export default async function ManageLinkPage({ params }: ManageLinkPageProps) {
         </CardContent>
       </Card>
 
-      {/* Section to Add New Delivery Option (Form will go here) */}
+      {/* Section to Add New Delivery Option */}
       <Card>
         <CardHeader>
           <CardTitle>Add New Delivery Option</CardTitle>
@@ -120,10 +121,13 @@ export default async function ManageLinkPage({ params }: ManageLinkPageProps) {
         <CardContent>
           <AddDeliveryOptionForm
             linkId={link.id}
-            onDeliveryOptionAdded={handleDeliveryOptionAdded}
+            onDeliveryOptionAdded={handleDataChange}
           />
         </CardContent>
       </Card>
+
+      {/* Section to Delete Link */}
+      <DeleteLinkButton linkId={link.id} linkSlug={link.slug} />
     </div>
   );
 }

@@ -24,6 +24,15 @@ export const AddDeliveryOptionSchema = z.object({
 
 export type AddDeliveryOptionFormValues = z.infer<typeof AddDeliveryOptionSchema>;
 
+// Schema for updating a delivery option
+export const UpdateDeliveryOptionSchema = z.object({
+  deliveryOptionId: z.string().cuid({ message: "Invalid Delivery Option ID." }),
+  type: DeliveryOptionTypeEnum, 
+  destination: z.string().min(1, { message: "Destination is required." }),
+  active: z.boolean(),
+});
+export type UpdateDeliveryOptionFormValues = z.infer<typeof UpdateDeliveryOptionSchema>;
+
 // We can refine validation for destination based on type if needed (e.g., email format for EMAIL, URL for WEBHOOK)
 // For example, using a superRefine or discriminated union:
 // export const AddDeliveryOptionSchema = z.discriminatedUnion("type", [
