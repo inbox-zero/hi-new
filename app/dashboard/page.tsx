@@ -16,6 +16,7 @@ import type {
   Link as PrismaLinkModel,
   DeliveryOption as PrismaDeliveryOptionModel,
 } from "@/generated/prisma";
+import LogoutButton from "@/components/auth/LogoutButton";
 
 // Define a more specific type for our userLinks array items
 // This explicitly defines the shape including the nested deliveryOptions
@@ -50,9 +51,12 @@ export default async function DashboardPage() {
     <div className="container mx-auto p-4 md:p-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Your Links</h1>
-        <Button asChild>
-          <Link href="/dashboard/links/create">Create New Link</Link>
-        </Button>
+        <div className="flex items-center space-x-2">
+          <Button asChild>
+            <Link href="/dashboard/links/create">Create New Link</Link>
+          </Button>
+          <LogoutButton />
+        </div>
       </div>
 
       {userLinks.length === 0 ? (

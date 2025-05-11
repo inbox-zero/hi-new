@@ -1,6 +1,6 @@
 # Task ID: 8
 # Title: Implement Basic Rate Limiting
-# Status: pending
+# Status: in-progress
 # Dependencies: 1, 6
 # Priority: medium
 # Description: Add rate limiting to prevent abuse of endpoints.

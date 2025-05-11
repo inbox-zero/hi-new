@@ -101,3 +101,6 @@ also we use pnpm and not npm
 47. tasks 29-32
 48. use lucide for icons
 49. list tasks. then update task statuses
+50. sure you can do logout now
+51. sure. also update tasks
+52. sure. you can use upstash for rate limits: @https://upstash.com/docs/redis/sdks/ratelimit-ts/overview 

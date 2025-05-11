@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { type ContactFormValues, ContactFormSchema } from "@/lib/schemas/contact";
 import { Resend } from "resend";
+import { ipRateLimiter } from "@/lib/ratelimit"; // Import the rate limiter
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 // Ensure you have a default "from" email address configured, e.g., from your domain
@@ -12,6 +13,45 @@ export async function POST(
   { params }: { params: { slug: string } }
 ) {
   const { slug } = params;
+
+  // Apply IP-based rate limiting first
+  let ip = request.headers.get("x-forwarded-for");
+  const realIp = request.headers.get("x-real-ip");
+  
+  if (ip) {
+    // x-forwarded-for can be a comma-separated list, take the first one
+    ip = ip.split(",")[0].trim();
+  } else if (realIp) {
+    ip = realIp.trim();
+  } else {
+    // Fallback for local development or direct connections (less common in production)
+    // For Vercel, request.ip would be available in Edge, but x-forwarded-for is standard.
+    // If using Node.js runtime on Vercel, x-forwarded-for is the one to check.
+    // If you are self-hosting, how you get the IP depends on your reverse proxy setup.
+    ip = "127.0.0.1"; // Default if no IP found (should not happen in most prod environments)
+  }
+  
+  const { success: rateLimitSuccess, limit, remaining, reset } = await ipRateLimiter.limit(ip);
+
+  if (!rateLimitSuccess) {
+    return NextResponse.json(
+      { 
+        success: false, 
+        error: "Too many requests. Please try again later.", 
+        limit, 
+        remaining, 
+        reset: new Date(reset).toISOString() 
+      },
+      { 
+        status: 429, 
+        headers: {
+          'X-RateLimit-Limit': limit.toString(),
+          'X-RateLimit-Remaining': remaining.toString(),
+          'X-RateLimit-Reset': new Date(reset).toISOString(),
+        }
+      }
+    );
+  }
 
   try {
     const body = await request.json();
