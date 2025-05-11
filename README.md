@@ -90,3 +90,4 @@ also we use pnpm and not npm
 37. yes. but we also need to support POST requests to that url. can that be done in nextjs?
 38. update tasks first. then we can do resend stuff
 39. i added textarea already. you can do resend
+40. webhook now

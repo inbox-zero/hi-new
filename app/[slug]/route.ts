@@ -64,19 +64,50 @@ export async function POST(
           }).then(response => {
             if (response.error) {
               console.error(`Resend error for ${option.destination}:`, response.error);
-              return { success: false, destination: option.destination, error: response.error.message };
+              return { success: false, type: "EMAIL", destination: option.destination, error: response.error.message };
             }
             console.log(`Email sent successfully to: ${option.destination}`);
-            return { success: true, destination: option.destination };
+            return { success: true, type: "EMAIL", destination: option.destination };
           }).catch(error => {
             console.error(`Failed to send email to ${option.destination}:`, error);
-            return { success: false, destination: option.destination, error: error.message };
+            return { success: false, type: "EMAIL", destination: option.destination, error: error.message };
           })
         );
       } else if (option.type === "WEBHOOK") {
-        // TODO: Implement webhook POST logic
-        console.log(`Webhook delivery to: ${option.destination} (Not implemented yet)`);
-        // deliveryPromises.push(fetch(option.destination, { method: "POST", body: JSON.stringify({ senderName, senderEmail, message, source: `hi.new/${slug}` }), headers: {"Content-Type": "application/json"}}));
+        console.log(`Attempting to send webhook to: ${option.destination} for link: ${slug}`);
+        const webhookPayload = {
+          senderName,
+          senderEmail,
+          message,
+          source: `hi.new/${slug}`,
+          linkId: link.id,
+          webhookDestination: option.destination
+        };
+        deliveryPromises.push(
+          fetch(option.destination, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(webhookPayload),
+          })
+          .then(async (response) => {
+            if (!response.ok) {
+              // Try to get error message from webhook response body if possible
+              let errorBody = `Webhook failed with status: ${response.status}`;
+              try {
+                const errJson = await response.json();
+                errorBody = errJson.message || errJson.error || JSON.stringify(errJson);
+              } catch (_e) { /* ignore if response is not json, renamed e to _e */ }
+              console.error(`Webhook error for ${option.destination}: ${errorBody}`);
+              return { success: false, type: "WEBHOOK", destination: option.destination, error: errorBody };
+            }
+            console.log(`Webhook sent successfully to: ${option.destination}`);
+            return { success: true, type: "WEBHOOK", destination: option.destination };
+          })
+          .catch(error => {
+            console.error(`Failed to send webhook to ${option.destination}:`, error);
+            return { success: false, type: "WEBHOOK", destination: option.destination, error: error.message };
+          })
+        );
       }
     }
 
