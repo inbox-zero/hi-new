@@ -43,6 +43,9 @@ TaskMaster was used to build this project.
 
 Steps taken to create this project:
 1. npx create-next-app@latest hinew
-2. Create PRD with Claude
-3. Install [TaskMaster MCP](https://github.com/eyaltoledano/claude-task-master)
-4. 
+2. Install [TaskMaster MCP](https://github.com/eyaltoledano/claude-task-master)
+3. Init TM: "Can you please initialize taskmaster-ai into my project?"
+4. Create PRD with Claude to match example example_prd.txt
+5. Paste in scripts/prd.txt
+6. TM: "Can you parse my PRD at scripts/prd.txt?" (this created the tasks)
+7. TM: "ive already set up nextjs. mark it as done. what's next?"
