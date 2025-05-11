@@ -12,12 +12,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import type {
   Link as PrismaLink,
   DeliveryOption as PrismaDeliveryOption,
 } from "@/generated/prisma";
 import AddDeliveryOptionForm from "@/components/links/AddDeliveryOptionForm";
+import DeliveryOptionItem from "@/components/links/DeliveryOptionItem";
 import { unstable_noStore as noStore } from "next/cache";
 
 // Helper type for Link with its delivery options
@@ -102,51 +102,7 @@ export default async function ManageLinkPage({ params }: ManageLinkPageProps) {
           ) : (
             <ul className="space-y-3">
               {link.deliveryOptions.map((opt) => (
-                <li
-                  key={opt.id}
-                  className="flex justify-between items-center p-3 border rounded-md"
-                >
-                  <div>
-                    <span
-                      className={`text-sm font-medium ${opt.active ? "" : "text-muted-foreground line-through"}`}
-                    >
-                      {opt.type}: {opt.destination}
-                    </span>
-                    {opt.type === "WEBHOOK" && opt.webhookSecret && (
-                      <p className="text-xs text-muted-foreground">
-                        Secret: ••••••••••••{" "}
-                        <Button
-                          variant="link"
-                          size="sm"
-                          className="h-auto p-0 ml-1"
-                          onClick={() => {
-                            if (opt.webhookSecret) {
-                              navigator.clipboard.writeText(opt.webhookSecret);
-                            }
-                          }}
-                        >
-                          Copy
-                        </Button>
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    {/* TODO: Edit/Delete buttons for delivery options */}
-                    <Button variant="ghost" size="sm">
-                      Edit
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-destructive hover:text-destructive-foreground hover:bg-destructive"
-                    >
-                      Delete
-                    </Button>
-                    <Badge variant={opt.active ? "default" : "secondary"}>
-                      {opt.active ? "Active" : "Inactive"}
-                    </Badge>
-                  </div>
-                </li>
+                <DeliveryOptionItem key={opt.id} option={opt} />
               ))}
             </ul>
           )}

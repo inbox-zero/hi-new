@@ -135,3 +135,49 @@ export async function addDeliveryOptionAction(
     return { success: false, error: errorMessage };
   }
 }
+
+export async function deleteDeliveryOptionAction(deliveryOptionId: string) {
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session || !session.user || !session.user.id) {
+      return { success: false, error: "User not authenticated." };
+    }
+
+    if (!deliveryOptionId || typeof deliveryOptionId !== 'string') {
+        return { success: false, error: "Invalid Delivery Option ID provided." };
+    }
+
+    // Verify user owns the link to which this delivery option belongs
+    const optionToDelete = await prisma.deliveryOption.findUnique({
+      where: { id: deliveryOptionId },
+      select: {
+        link: {
+          select: { userId: true, id: true },
+        },
+      },
+    });
+
+    if (!optionToDelete) {
+      return { success: false, error: "Delivery option not found." };
+    }
+
+    if (optionToDelete.link.userId !== session.user.id) {
+      return { success: false, error: "User does not have permission to delete this delivery option." };
+    }
+
+    // Proceed with deletion
+    await prisma.deliveryOption.delete({
+      where: { id: deliveryOptionId },
+    });
+
+    return { success: true, message: "Delivery option deleted successfully." };
+
+  } catch (error) {
+    console.error("Error in deleteDeliveryOptionAction:", error);
+    let errorMessage = "An unexpected error occurred while deleting the delivery option.";
+    if (error instanceof Error) {
+        errorMessage = error.message;
+    }
+    return { success: false, error: errorMessage };
+  }
+}

@@ -51,6 +51,7 @@ Steps taken to create this project:
 6. TM: "Can you parse my PRD at scripts/prd.txt?" (this created the tasks)
 
 Now the basic set up is done here's what I did next:
+(Doesn't show every single prompt, but gets most of it. There was a little manual fixing from me along the way, but after initial project / Prisma / auth was done, it was mostly going on its own). With me often just saying go to next step, or doing a prisma migrate or shadcn add and then having it continue.
 
 7. TM: "ive already set up nextjs. mark it as done. what's next?"
 8. TM: "let's go add this. here's the docs for it: @https://www.better-auth.com/"
@@ -97,3 +98,4 @@ also we use pnpm and not npm
 44. you needed to import the types from "@/generated/prisma". prisma changed @prisma-best-practices.mdc 
 45. Given your interest in the core link functionality, would you like to start working on the "Manage Link" page, specifically focusing on allowing users to add Delivery Options (Email/Webhook) to their links? This seems like a very logical next piece. - yes
 46. update task list. and add new tasks we need to do next
+47. tasks 29-32
