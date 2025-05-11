@@ -1,6 +1,6 @@
 # Task ID: 3
 # Title: Design and Implement User Data Model
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: Define and implement the User data model in Prisma.

@@ -1,7 +1,7 @@
 # Task ID: 21
 # Title: Implement Premium Username System
 # Status: pending
-# Dependencies: 3, 4
+# Dependencies: 3
 # Priority: low
 # Description: Restrict short usernames (≤4 characters) to premium users.
 # Details:

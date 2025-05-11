@@ -77,3 +77,7 @@ Now the basic set up is done here's what I did next:
 25. Fixed bug with styling/Tailwind myself
 26. TM: "i like react hook form and zod for validation. also we dont have google login. just keep it simple with username/pw for now. update tasks"
 27. TM: "fix lint errors"
+28. TM: "lets get to next task now. i want to get to the contact form implementation and POST because that's one of the main features"
+29. TM: "i ran prisma generate. keep going"
+30. lets take a step back. a user should be able to create multiple links / contact forms. they could go to different bots or emails
+31. no you got it wrong. all links are: hi.new/LINK a user could have 10 of those though

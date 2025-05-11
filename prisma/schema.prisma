@@ -12,16 +12,16 @@ datasource db {
 
 model User {
   id            String    @id
-  name          String
-  email         String
+  name          String // For display, from Better Auth
+  email         String    @unique // Better Auth ensures this is unique
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  links         Link[]
 
-  @@unique([email])
   @@map("user")
 }
 
@@ -68,4 +68,37 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+// RENAMED to Link model
+model Link {
+  id              String           @id @default(cuid())
+  slug            String           @unique // This is the globally unique part in hi.new/slug
+  label           String? // Optional internal label for the user to identify this link
+  userId          String
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deliveryOptions DeliveryOption[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@map("link") // UPDATED table map
+}
+
+// UPDATED DeliveryOption model to reflect rename
+model DeliveryOption {
+  id          String       @id @default(cuid())
+  linkId      String // UPDATED - foreign key to Link
+  link        Link         @relation(fields: [linkId], references: [id], onDelete: Cascade) // UPDATED - relation to Link
+  type        DeliveryType
+  destination String
+  active      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("delivery_option")
+}
+
+enum DeliveryType {
+  EMAIL
+  WEBHOOK
 }

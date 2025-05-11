@@ -70,8 +70,7 @@
           "title": "Create API Handler for Authentication",
           "description": "Implement route handler for authentication API requests",
           "dependencies": [
-            3,
-            4
+            3
           ],
           "details": "Set up a route handler to serve POST and GET requests to the /api/auth endpoint using the handler provided by Better Auth",
           "status": "done",
@@ -100,21 +99,7 @@
       "dependencies": [
         1
       ],
-      "status": "pending",
-      "subtasks": []
-    },
-    {
-      "id": 4,
-      "title": "Build Username Claiming System",
-      "description": "Implement username claiming during signup.",
-      "details": "Add username field to signup form. Validate uniqueness and format. Store claimed username in User model.",
-      "testStrategy": "Test username validation, uniqueness, and assignment during signup. Verify error messages for taken usernames.",
-      "priority": "high",
-      "dependencies": [
-        2,
-        3
-      ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -126,8 +111,7 @@
       "priority": "high",
       "dependencies": [
         1,
-        3,
-        4
+        3
       ],
       "status": "pending",
       "subtasks": []
@@ -142,7 +126,6 @@
       "dependencies": [
         1,
         3,
-        4,
         5
       ],
       "status": "pending",
@@ -284,8 +267,7 @@
       "testStrategy": "Test username validation and upgrade flow. Verify premium status persistence.",
       "priority": "low",
       "dependencies": [
-        3,
-        4
+        3
       ],
       "status": "pending",
       "subtasks": []
@@ -359,6 +341,19 @@
         5
       ],
       "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 28,
+      "title": "Build Link Creation and Management System",
+      "description": "Develop a system that enables authenticated users to create, view, and manage globally unique Links (hi.new/slug), including UI for link creation, listing, and configuration of DeliveryOptions.",
+      "details": "Implement a user interface allowing authenticated users to input a custom slug and optional label for new Links. On submission, validate the slug on the server for correct format (e.g., allowed characters, length) and check for global uniqueness before saving the Link to the database, associating it with the current user. Develop a UI component to list all Links owned by the user, displaying slug, label, and relevant metadata. Provide functionality for users to configure DeliveryOptions for each Link, which may include settings such as delivery method, scheduling, or access controls. Ensure all operations are protected by authentication (dependent on Task 2). Consider edge cases such as slug collisions, input sanitization, and error handling. Design the system for scalability and maintainability, with clear separation between UI, server logic, and data access layers.",
+      "testStrategy": "Verify that only authenticated users can access link management features. Test link creation with valid and invalid slugs, ensuring slugs are globally unique and correctly validated. Confirm that new Links are saved and associated with the correct user. Check that the user's Links are accurately listed in the UI, and that DeliveryOptions can be configured and saved for each Link. Test error handling for duplicate slugs, invalid input, and unauthorized access. Perform end-to-end tests covering the full workflow: authentication, link creation, listing, and DeliveryOptions configuration.",
+      "status": "pending",
+      "dependencies": [
+        2
+      ],
+      "priority": "high",
       "subtasks": []
     }
   ]

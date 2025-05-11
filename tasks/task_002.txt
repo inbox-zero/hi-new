@@ -36,7 +36,7 @@ Create an auth.ts file in the appropriate location (project root, lib/, or utils
 Configure Better Auth to use SQLite, PostgreSQL, MySQL, or another database through Kysely or appropriate adapters
 
 ## 5. Create API Handler for Authentication [done]
-### Dependencies: 2.3, 2.4
+### Dependencies: 2.3
 ### Description: Implement route handler for authentication API requests
 ### Details:
 Set up a route handler to serve POST and GET requests to the /api/auth endpoint using the handler provided by Better Auth
