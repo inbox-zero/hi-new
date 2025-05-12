@@ -1,5 +1,12 @@
 # Hi.new
 
+> **🚧 Under Construction! 🚧**
+>
+> Hi.new is currently a work-in-progress and not yet production-ready.
+> It will launch at [hi.new](https://hi.new) when it's ready.
+>
+> *This is a project by the [Inbox Zero](https://www.getinboxzero.com) team, the world's best AI assistant for email.*
+
 Hi.new is a minimalist contact shortlink platform. Allow anyone to contact you or your AI agent.
 
 You get your own link at hi.new/elie where anyone can contact you. Messages are then forwarded on to your email or a webhook.
