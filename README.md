@@ -1,4 +1,4 @@
-# Hi.new
+# Hi.new - say hi to anyone, for humans and agents
 
 > **🚧 Under Construction! 🚧**
 >
