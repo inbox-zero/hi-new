@@ -179,3 +179,4 @@ also we use pnpm and not npm
 56. i want to run a postgres db at: DATABASE_URL="postgresql://postgres:password@localhost:5434/hinew?schema=public". using docker for this is good
 57. you can update gitignore and readme file to explain how to run it for people self-hosting
 58. i made a small update. let's update the getting started now as pnpm dev on its own no longer works. also user needs to pnpm install as a step. keep it concise
+59. I created a migration file using Prisma
