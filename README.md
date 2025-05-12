@@ -104,3 +104,6 @@ also we use pnpm and not npm
 50. sure you can do logout now
 51. sure. also update tasks
 52. sure. you can use upstash for rate limits: @https://upstash.com/docs/redis/sdks/ratelimit-ts/overview 
+53. we need to fix this: "Conflicting route and page at /[slug]: route at /[slug]/route and page at /[slug]/page". we do want a post and get request, but the current approach doesn't work
+54. you have it wrong. the error clearly shows you cant have route and page conflict. so i guess lets just change the route for the post. could be api/LINK/route.ts i guess
+55. I made a manual fix using redirects

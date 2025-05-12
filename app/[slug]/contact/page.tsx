@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import ContactForm from "@/components/contact/ContactForm"; // Import the actual form
 // We will create this ContactForm component next
-// import ContactForm from "@/components/contact/ContactForm"; 
+// import ContactForm from "@/components/contact/ContactForm";
 
 interface LinkPageProps {
   params: {
@@ -36,13 +36,17 @@ export default async function LinkPage({ params }: LinkPageProps) {
         <p className="text-sm text-muted-foreground mb-6">
           You are sending a message to <strong>hi.new/{link.slug}</strong>.
         </p>
-        
+
         <ContactForm linkId={link.id} linkSlug={link.slug} />
 
         {/* Placeholder for the form component */}
         <div className="p-6 border rounded-md bg-gray-50">
-          <p className="text-center text-gray-500">Contact form will be here.</p>
-          <p className="text-center text-xs text-gray-400 mt-2">Link ID: {link.id}</p>
+          <p className="text-center text-gray-500">
+            Contact form will be here.
+          </p>
+          <p className="text-center text-xs text-gray-400 mt-2">
+            Link ID: {link.id}
+          </p>
         </div>
 
         {/* We can add more details or branding later */}
@@ -55,4 +59,4 @@ export default async function LinkPage({ params }: LinkPageProps) {
 // export async function generateStaticParams() {
 //   const links = await prisma.link.findMany({ select: { slug: true } });
 //   return links.map((link) => ({ slug: link.slug }));
-// } 
+// }
