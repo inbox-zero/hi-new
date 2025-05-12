@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    container_name: hinew_postgres_dev
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hinew
+    ports:
+      - "5434:5432" # Exposes PostgreSQL on host port 5434
+    volumes:
+      - ./.pgdata:/var/lib/postgresql/data # Persist data to ./.pgdata directory
+
+volumes:
+  .pgdata: # Defines the volume, though direct mapping above is often sufficient 

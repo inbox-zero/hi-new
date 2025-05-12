@@ -29,13 +29,82 @@ PRs for roadmap features are welcome and encouraged. This is a community driven 
 
 ## Getting Started
 
-Run the development server:
+Follow these steps to get the hi.new development environment running locally:
 
-```bash
-pnpm dev
-```
+1.  **Clone the Repository** (if you haven't already).
+
+2.  **Install Dependencies**:
+    ```bash
+    pnpm install
+    ```
+
+3.  **Set Up Local Database (Docker)**:
+    *   Ensure Docker is installed and running ([Docker Desktop](https://www.docker.com/products/docker-desktop)).
+    *   Copy `.env.example` to `.env.local` and configure your environment variables, especially:
+        ```env
+        DATABASE_URL="postgresql://postgres:password@localhost:5434/hinew?schema=public"
+        # Also set RESEND_API_KEY, UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN, AUTH_SECRET
+        ```
+    *   Start the PostgreSQL container:
+        ```bash
+        docker-compose up -d
+        ```
+    *   Apply database migrations:
+        ```bash
+        pnpm exec prisma migrate deploy
+        ```
+    *   (Optional, if client is out of sync) Generate Prisma client:
+        ```bash
+        pnpm exec prisma generate
+        ```
+    *   For more details on managing the Dockerized database, see the "Local Development Database (Docker)" section below (or we can keep the detailed steps here if you prefer to remove the separate subsection).
+
+4.  **Run the Development Server**:
+    ```bash
+    pnpm dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Local Development Database (Docker)
+
+For local development, this project is configured to use a PostgreSQL database running in Docker. This ensures a consistent database environment.
+
+1.  **Ensure Docker is Installed and Running**:
+    If you don't have Docker installed, download and install [Docker Desktop](https://www.docker.com/products/docker-desktop).
+
+2.  **Configure Environment Variables**:
+    *   Copy the `.env.example` file to a new file named `.env.local` in the project root.
+    *   Ensure the `DATABASE_URL` in `.env.local` is set to:
+        ```
+        DATABASE_URL="postgresql://postgres:password@localhost:5434/hinew?schema=public"
+        ```
+    *   Fill in any other required environment variables in `.env.local` (e.g., `RESEND_API_KEY`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `AUTH_SECRET`).
+
+3.  **Start the PostgreSQL Container**:
+    In your project root directory, run:
+    ```bash
+    docker-compose up -d
+    ```
+    This command will start the PostgreSQL database service defined in the `[docker-compose.yml](mdc:docker-compose.yml)` file. The `-d` flag runs it in detached mode.
+    The database will be accessible on `localhost:5434`, and data will be persisted in the `./.pgdata/` directory (which should be in your `.gitignore`).
+
+4.  **Apply Database Migrations**:
+    Once the Docker container is running and the database is ready, apply the Prisma migrations to set up your database schema:
+    ```bash
+    pnpm exec prisma migrate deploy
+    ```
+    If this is the very first time or you encounter issues, you might need to ensure your database is clean or use `pnpm exec prisma migrate reset` (this will delete data) followed by `pnpm exec prisma migrate deploy` or `pnpm exec prisma db push --accept-data-loss` for a fresh schema push (use with caution if you have data).
+
+5.  **Run Prisma Generate** (if not automatically run by migrate):
+    ```bash
+    pnpm exec prisma generate
+    ```
+
+Now your Next.js application should be able to connect to the local Dockerized PostgreSQL database when you run `pnpm dev`.
+
+To stop the database container, run: `docker-compose down`
+To view logs: `docker-compose logs postgres`
 
 ## TaskMaster
 
@@ -107,3 +176,6 @@ also we use pnpm and not npm
 53. we need to fix this: "Conflicting route and page at /[slug]: route at /[slug]/route and page at /[slug]/page". we do want a post and get request, but the current approach doesn't work
 54. you have it wrong. the error clearly shows you cant have route and page conflict. so i guess lets just change the route for the post. could be api/LINK/route.ts i guess
 55. I made a manual fix using redirects
+56. i want to run a postgres db at: DATABASE_URL="postgresql://postgres:password@localhost:5434/hinew?schema=public". using docker for this is good
+57. you can update gitignore and readme file to explain how to run it for people self-hosting
+58. i made a small update. let's update the getting started now as pnpm dev on its own no longer works. also user needs to pnpm install as a step. keep it concise
