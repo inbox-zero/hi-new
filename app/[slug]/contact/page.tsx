@@ -1,8 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import ContactForm from "@/components/contact/ContactForm"; // Import the actual form
-// We will create this ContactForm component next
-// import ContactForm from "@/components/contact/ContactForm";
+import ContactForm from "@/components/contact/ContactForm";
 
 interface LinkPageProps {
   params: {
@@ -24,7 +22,7 @@ export default async function LinkPage({ params }: LinkPageProps) {
   const link = await getLinkData(slug);
 
   if (!link) {
-    notFound(); // Triggers Next.js 404 page
+    notFound();
   }
 
   return (
@@ -38,18 +36,6 @@ export default async function LinkPage({ params }: LinkPageProps) {
         </p>
 
         <ContactForm linkId={link.id} linkSlug={link.slug} />
-
-        {/* Placeholder for the form component */}
-        <div className="p-6 border rounded-md bg-gray-50">
-          <p className="text-center text-gray-500">
-            Contact form will be here.
-          </p>
-          <p className="text-center text-xs text-gray-400 mt-2">
-            Link ID: {link.id}
-          </p>
-        </div>
-
-        {/* We can add more details or branding later */}
       </div>
     </div>
   );
