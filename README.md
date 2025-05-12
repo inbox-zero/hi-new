@@ -198,3 +198,4 @@ generator client {
 @schema.prisma 
 64. create a landing page for the project. it should be clean, minimal and modern @page.tsx 
 65. use blue instead. hero cop update: One link to say hi to anyone—human or AI. subheading should mention you can say hi via api or contact form
+66. lets make the rate limiter optional so people can run the project without installing upstash

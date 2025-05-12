@@ -5,7 +5,7 @@ import {
   ContactFormSchema,
 } from "@/lib/schemas/contact";
 import { Resend } from "resend";
-import { ipRateLimiter } from "@/lib/ratelimit"; // Import the rate limiter
+import { limitByIp } from "@/lib/ratelimit"; // Import the rate limiter function
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 // Ensure you have a default "from" email address configured, e.g., from your domain
@@ -48,7 +48,7 @@ export async function POST(
     limit,
     remaining,
     reset,
-  } = await ipRateLimiter.limit(ip);
+  } = await limitByIp(ip); // Use the new function
 
   if (!rateLimitSuccess) {
     return NextResponse.json(
