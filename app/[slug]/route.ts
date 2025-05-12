@@ -14,17 +14,17 @@ const DEFAULT_FROM_EMAIL =
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = params;
+  const { slug } = await params;
   return NextResponse.redirect(new URL(`/${slug}/contact`, request.url));
 }
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = params;
+  const { slug } = await params;
 
   // Apply IP-based rate limiting first
   let ip = request.headers.get("x-forwarded-for");
@@ -247,7 +247,7 @@ export async function POST(
       return NextResponse.json(
         {
           success: true,
-          message: "Message processed. Some deliveries may have succeeded.",
+          message: "Sent successfully!",
         },
         { status: 200 }
       );

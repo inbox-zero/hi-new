@@ -206,3 +206,4 @@ also we use pnpm and not npm
 65. use blue instead. hero cop update: One link to say hi to anyone—human or AI. subheading should mention you can say hi via api or contact form
 66. lets make the rate limiter optional so people can run the project without installing upstash
 67. Remove boilerplate code
+68. Some manual cleanup to fix contact sending

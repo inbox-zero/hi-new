@@ -41,9 +41,9 @@ async function getLinkDetails(
 }
 
 interface ManageLinkPageProps {
-  params: {
+  params: Promise<{
     linkId: string;
-  };
+  }>;
 }
 
 export default async function ManageLinkPage({ params }: ManageLinkPageProps) {
@@ -54,7 +54,8 @@ export default async function ManageLinkPage({ params }: ManageLinkPageProps) {
     redirect("/login");
   }
 
-  const link = await getLinkDetails(params.linkId, session.user.id);
+  const { linkId } = await params;
+  const link = await getLinkDetails(linkId, session.user.id);
 
   if (!link) {
     notFound();

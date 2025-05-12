@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import ContactForm from "@/components/contact/ContactForm";
 
 interface LinkPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getLinkData(slug: string) {
@@ -18,7 +18,7 @@ async function getLinkData(slug: string) {
 }
 
 export default async function LinkPage({ params }: LinkPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const link = await getLinkData(slug);
 
   if (!link) {
@@ -29,7 +29,7 @@ export default async function LinkPage({ params }: LinkPageProps) {
     <div className="flex min-h-screen flex-col items-center justify-start p-4 pt-10 md:pt-20">
       <div className="w-full max-w-xl rounded-lg border bg-card text-card-foreground shadow-sm p-6 md:p-8">
         <h1 className="text-2xl font-semibold leading-none tracking-tight mb-2">
-          Contact via: {link.label || slug}
+          Say hi to {link.label || slug}
         </h1>
         <p className="text-sm text-muted-foreground mb-6">
           You are sending a message to <strong>hi.new/{link.slug}</strong>.
