@@ -182,20 +182,19 @@ also we use pnpm and not npm
 59. I created a migration file using Prisma
 60. `pnpm install @prisma/adapter-pg`
 61. fix prisma @prisma.ts. this is how the new prisma works:
+    import { PrismaPg } from '@prisma/adapter-pg'
+    import { PrismaClient } from './generated/prisma'
 
-import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient } from './generated/prisma'
-
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
-const prisma = new PrismaClient({ adapter })
+    const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+    const prisma = new PrismaClient({ adapter })
 62. why did you import pg? follow my example correctly
 63. ah we need these flags:
-generator client {
-  provider        = "prisma-client-js" // or `prisma-client`
-  previewFeatures = ["queryCompiler", "driverAdapters"]
-  output          = "../generated/prisma"
-}
-@schema.prisma 
+    generator client {
+    provider        = "prisma-client-js" // or `prisma-client`
+    previewFeatures = ["queryCompiler", "driverAdapters"]
+    output          = "../generated/prisma"
+    }
+    @schema.prisma 
 64. create a landing page for the project. it should be clean, minimal and modern @page.tsx 
 65. use blue instead. hero cop update: One link to say hi to anyone—human or AI. subheading should mention you can say hi via api or contact form
 66. lets make the rate limiter optional so people can run the project without installing upstash
