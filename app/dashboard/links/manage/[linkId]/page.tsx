@@ -15,7 +15,7 @@ import {
 import type {
   Link as PrismaLink,
   DeliveryOption as PrismaDeliveryOption,
-} from "@/generated/prisma";
+} from "@prisma/client";
 import AddDeliveryOptionForm from "@/components/links/AddDeliveryOptionForm";
 import DeliveryOptionItem from "@/components/links/DeliveryOptionItem";
 import EditLinkLabelForm from "@/components/links/EditLinkLabelForm";

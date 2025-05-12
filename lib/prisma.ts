@@ -1,14 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
-import { PrismaPg } from "@prisma/adapter-pg";
-
-const connectionString = process.env.DATABASE_URL;
-
-if (!connectionString) {
-  throw new Error("DATABASE_URL environment variable is not set or is empty.");
-}
-
-// Instantiate the PrismaPg adapter directly with the connection string
-const adapter = new PrismaPg(connectionString);
+import { PrismaClient } from "@prisma/client";
 
 // Declare a global variable to hold the Prisma Client instance.
 // This helps in reusing the same instance across hot reloads in development.
@@ -18,7 +8,12 @@ declare global {
 }
 
 // biome-ignore lint/suspicious/noRedeclare: <explanation>
-export const prisma = global.prisma || new PrismaClient({ adapter });
+export const prisma =
+  global.prisma ||
+  new PrismaClient({
+    // You can add Prisma Client options here, e.g., log levels
+    // log: ['query', 'info', 'warn', 'error'],
+  });
 
 if (process.env.NODE_ENV !== "production") {
   global.prisma = prisma;

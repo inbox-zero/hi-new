@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import type {
   Link as PrismaLinkModel,
   DeliveryOption as PrismaDeliveryOptionModel,
-} from "@/generated/prisma";
+} from "@prisma/client";
 import LogoutButton from "@/components/auth/LogoutButton";
 
 // Define a more specific type for our userLinks array items

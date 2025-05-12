@@ -1,6 +1,6 @@
 "use client";
 
-import type { DeliveryOption as PrismaDeliveryOption } from "@/generated/prisma";
+import type { DeliveryOption as PrismaDeliveryOption } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { deleteDeliveryOptionAction } from "@/actions/link";

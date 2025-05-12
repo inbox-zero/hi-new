@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, type ControllerRenderProps, type SubmitHandler } from "react-hook-form";
+import {
+  useForm,
+  type ControllerRenderProps,
+  type SubmitHandler,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { DeliveryOption as PrismaDeliveryOption } from "@/generated/prisma";
+import type { DeliveryOption as PrismaDeliveryOption } from "@prisma/client";
 import {
   UpdateDeliveryOptionSchema,
   type UpdateDeliveryOptionFormValues,
-  DeliveryOptionTypeEnum
+  DeliveryOptionTypeEnum,
 } from "@/lib/schemas/link";
 import { updateDeliveryOptionAction } from "@/actions/link";
 import { Button } from "@/components/ui/button";
@@ -21,7 +25,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription
+  FormDescription,
 } from "@/components/ui/form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -43,13 +47,15 @@ export default function EditDeliveryOptionForm({
     resolver: zodResolver(UpdateDeliveryOptionSchema),
     defaultValues: {
       deliveryOptionId: option.id,
-      type: option.type as UpdateDeliveryOptionFormValues['type'], // Cast if Prisma enum matches Zod enum values
+      type: option.type as UpdateDeliveryOptionFormValues["type"], // Cast if Prisma enum matches Zod enum values
       destination: option.destination,
       active: option.active,
     },
   });
 
-  const onSubmit: SubmitHandler<UpdateDeliveryOptionFormValues> = async (values) => {
+  const onSubmit: SubmitHandler<UpdateDeliveryOptionFormValues> = async (
+    values
+  ) => {
     setServerError(null);
     setIsLoading(true);
     try {
@@ -76,7 +82,14 @@ export default function EditDeliveryOptionForm({
         <FormField
           control={form.control}
           name="type"
-          render={({ field }: { field: ControllerRenderProps<UpdateDeliveryOptionFormValues, "type">}) => (
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<
+              UpdateDeliveryOptionFormValues,
+              "type"
+            >;
+          }) => (
             <FormItem className="space-y-2">
               <FormLabel>Delivery Type</FormLabel>
               <FormControl>
@@ -86,11 +99,19 @@ export default function EditDeliveryOptionForm({
                   className="flex space-x-4"
                 >
                   <FormItem className="flex items-center space-x-2">
-                    <FormControl><RadioGroupItem value={DeliveryOptionTypeEnum.Enum.EMAIL} /></FormControl>
+                    <FormControl>
+                      <RadioGroupItem
+                        value={DeliveryOptionTypeEnum.Enum.EMAIL}
+                      />
+                    </FormControl>
                     <FormLabel className="font-normal">Email</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center space-x-2">
-                    <FormControl><RadioGroupItem value={DeliveryOptionTypeEnum.Enum.WEBHOOK} /></FormControl>
+                    <FormControl>
+                      <RadioGroupItem
+                        value={DeliveryOptionTypeEnum.Enum.WEBHOOK}
+                      />
+                    </FormControl>
                     <FormLabel className="font-normal">Webhook</FormLabel>
                   </FormItem>
                 </RadioGroup>
@@ -103,14 +124,25 @@ export default function EditDeliveryOptionForm({
         <FormField
           control={form.control}
           name="destination"
-          render={({ field }: { field: ControllerRenderProps<UpdateDeliveryOptionFormValues, "destination">}) => (
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<
+              UpdateDeliveryOptionFormValues,
+              "destination"
+            >;
+          }) => (
             <FormItem>
               <FormLabel>Destination</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder={form.watch("type") === DeliveryOptionTypeEnum.Enum.EMAIL ? "your.email@example.com" : "https://your-webhook-url.com"} 
-                  {...field} 
-                  disabled={isLoading} 
+                <Input
+                  placeholder={
+                    form.watch("type") === DeliveryOptionTypeEnum.Enum.EMAIL
+                      ? "your.email@example.com"
+                      : "https://your-webhook-url.com"
+                  }
+                  {...field}
+                  disabled={isLoading}
                 />
               </FormControl>
               <FormMessage />
@@ -121,7 +153,14 @@ export default function EditDeliveryOptionForm({
         <FormField
           control={form.control}
           name="active"
-          render={({ field }: { field: ControllerRenderProps<UpdateDeliveryOptionFormValues, "active">}) => (
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<
+              UpdateDeliveryOptionFormValues,
+              "active"
+            >;
+          }) => (
             <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
               <div className="space-y-0.5">
                 <FormLabel>Active</FormLabel>
@@ -148,7 +187,12 @@ export default function EditDeliveryOptionForm({
         )}
 
         <div className="flex justify-end space-x-2 pt-2">
-          <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={isLoading}
+          >
             Cancel
           </Button>
           <Button type="submit" disabled={isLoading}>
@@ -158,4 +202,4 @@ export default function EditDeliveryOptionForm({
       </form>
     </Form>
   );
-} 
+}

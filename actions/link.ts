@@ -14,7 +14,7 @@ import {
   UpdateDeliveryOptionSchema,
   type UpdateDeliveryOptionFormValues,
 } from "@/lib/schemas/link";
-import type { DeliveryType } from "@/generated/prisma"; // Import DeliveryType enum if needed for casting
+import type { DeliveryType } from "@prisma/client";
 
 export async function createLinkAction(values: CreateLinkFormValues) {
   try {
@@ -145,8 +145,8 @@ export async function deleteDeliveryOptionAction(deliveryOptionId: string) {
       return { success: false, error: "User not authenticated." };
     }
 
-    if (!deliveryOptionId || typeof deliveryOptionId !== 'string') {
-        return { success: false, error: "Invalid Delivery Option ID provided." };
+    if (!deliveryOptionId || typeof deliveryOptionId !== "string") {
+      return { success: false, error: "Invalid Delivery Option ID provided." };
     }
 
     // Verify user owns the link to which this delivery option belongs
@@ -164,7 +164,10 @@ export async function deleteDeliveryOptionAction(deliveryOptionId: string) {
     }
 
     if (optionToDelete.link.userId !== session.user.id) {
-      return { success: false, error: "User does not have permission to delete this delivery option." };
+      return {
+        success: false,
+        error: "User does not have permission to delete this delivery option.",
+      };
     }
 
     // Proceed with deletion
@@ -173,18 +176,20 @@ export async function deleteDeliveryOptionAction(deliveryOptionId: string) {
     });
 
     return { success: true, message: "Delivery option deleted successfully." };
-
   } catch (error) {
     console.error("Error in deleteDeliveryOptionAction:", error);
-    let errorMessage = "An unexpected error occurred while deleting the delivery option.";
+    let errorMessage =
+      "An unexpected error occurred while deleting the delivery option.";
     if (error instanceof Error) {
-        errorMessage = error.message;
+      errorMessage = error.message;
     }
     return { success: false, error: errorMessage };
   }
 }
 
-export async function updateDeliveryOptionAction(payload: UpdateDeliveryOptionFormValues) {
+export async function updateDeliveryOptionAction(
+  payload: UpdateDeliveryOptionFormValues
+) {
   try {
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session || !session.user || !session.user.id) {
@@ -194,10 +199,14 @@ export async function updateDeliveryOptionAction(payload: UpdateDeliveryOptionFo
     // Validate input against Zod schema
     const validationResult = UpdateDeliveryOptionSchema.safeParse(payload);
     if (!validationResult.success) {
-      return { success: false, error: validationResult.error.errors.map(e => e.message).join(", ") };
+      return {
+        success: false,
+        error: validationResult.error.errors.map((e) => e.message).join(", "),
+      };
     }
 
-    const { deliveryOptionId, type, destination, active } = validationResult.data;
+    const { deliveryOptionId, type, destination, active } =
+      validationResult.data;
 
     // Verify user owns the link to which this delivery option belongs
     const optionToUpdate = await prisma.deliveryOption.findUnique({
@@ -210,9 +219,12 @@ export async function updateDeliveryOptionAction(payload: UpdateDeliveryOptionFo
     }
 
     if (optionToUpdate.link.userId !== session.user.id) {
-      return { success: false, error: "User does not have permission to update this delivery option." };
+      return {
+        success: false,
+        error: "User does not have permission to update this delivery option.",
+      };
     }
-    
+
     const updatedDeliveryOption = await prisma.deliveryOption.update({
       where: { id: deliveryOptionId },
       data: {
@@ -223,34 +235,41 @@ export async function updateDeliveryOptionAction(payload: UpdateDeliveryOptionFo
       },
     });
 
-    return { success: true, message: "Delivery option updated successfully.", deliveryOption: updatedDeliveryOption };
-
+    return {
+      success: true,
+      message: "Delivery option updated successfully.",
+      deliveryOption: updatedDeliveryOption,
+    };
   } catch (error) {
     console.error("Error in updateDeliveryOptionAction:", error);
-    let errorMessage = "An unexpected error occurred while updating the delivery option.";
+    let errorMessage =
+      "An unexpected error occurred while updating the delivery option.";
     if (error instanceof Error) {
-        errorMessage = error.message;
+      errorMessage = error.message;
     }
     return { success: false, error: errorMessage };
   }
 }
 
-export async function updateLinkLabelAction(linkId: string, newLabel: string | null) {
+export async function updateLinkLabelAction(
+  linkId: string,
+  newLabel: string | null
+) {
   try {
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session || !session.user || !session.user.id) {
       return { success: false, error: "User not authenticated." };
     }
 
-    if (!linkId || typeof linkId !== 'string') {
-        return { success: false, error: "Invalid Link ID provided." };
+    if (!linkId || typeof linkId !== "string") {
+      return { success: false, error: "Invalid Link ID provided." };
     }
-    
+
     // Validate label (optional, can be empty string or null to clear)
     // Zod schema for this would be: z.string().nullable().optional()
     // For now, direct check:
-    if (newLabel !== null && typeof newLabel !== 'string') {
-        return { success: false, error: "Invalid label provided." };
+    if (newLabel !== null && typeof newLabel !== "string") {
+      return { success: false, error: "Invalid label provided." };
     }
 
     const labelToSave = newLabel === "" ? null : newLabel; // Store empty string as null
@@ -266,21 +285,28 @@ export async function updateLinkLabelAction(linkId: string, newLabel: string | n
     }
 
     if (linkToUpdate.userId !== session.user.id) {
-      return { success: false, error: "User does not have permission to update this link's label." };
+      return {
+        success: false,
+        error: "User does not have permission to update this link's label.",
+      };
     }
 
     const updatedLink = await prisma.link.update({
       where: { id: linkId },
-      data: { label: labelToSave }, 
+      data: { label: labelToSave },
     });
 
-    return { success: true, message: "Link label updated successfully.", link: updatedLink };
-
+    return {
+      success: true,
+      message: "Link label updated successfully.",
+      link: updatedLink,
+    };
   } catch (error) {
     console.error("Error in updateLinkLabelAction:", error);
-    let errorMessage = "An unexpected error occurred while updating the link label.";
+    let errorMessage =
+      "An unexpected error occurred while updating the link label.";
     if (error instanceof Error) {
-        errorMessage = error.message;
+      errorMessage = error.message;
     }
     return { success: false, error: errorMessage };
   }
@@ -293,8 +319,8 @@ export async function deleteLinkAction(linkId: string) {
       return { success: false, error: "User not authenticated." };
     }
 
-    if (!linkId || typeof linkId !== 'string') {
-        return { success: false, error: "Invalid Link ID provided." };
+    if (!linkId || typeof linkId !== "string") {
+      return { success: false, error: "Invalid Link ID provided." };
     }
 
     // Verify user owns the link
@@ -308,7 +334,10 @@ export async function deleteLinkAction(linkId: string) {
     }
 
     if (linkToDelete.userId !== session.user.id) {
-      return { success: false, error: "User does not have permission to delete this link." };
+      return {
+        success: false,
+        error: "User does not have permission to delete this link.",
+      };
     }
 
     // Proceed with deletion
@@ -318,12 +347,11 @@ export async function deleteLinkAction(linkId: string) {
     });
 
     return { success: true, message: "Link deleted successfully." };
-
   } catch (error) {
     console.error("Error in deleteLinkAction:", error);
     let errorMessage = "An unexpected error occurred while deleting the link.";
     if (error instanceof Error) {
-        errorMessage = error.message;
+      errorMessage = error.message;
     }
     return { success: false, error: errorMessage };
   }
