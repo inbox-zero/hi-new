@@ -180,3 +180,20 @@ also we use pnpm and not npm
 57. you can update gitignore and readme file to explain how to run it for people self-hosting
 58. i made a small update. let's update the getting started now as pnpm dev on its own no longer works. also user needs to pnpm install as a step. keep it concise
 59. I created a migration file using Prisma
+60. `pnpm install @prisma/adapter-pg`
+61. fix prisma @prisma.ts. this is how the new prisma works:
+
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from './generated/prisma'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+const prisma = new PrismaClient({ adapter })
+62. why did you import pg? follow my example correctly
+63. ah we need these flags:
+generator client {
+  provider        = "prisma-client-js" // or `prisma-client`
+  previewFeatures = ["queryCompiler", "driverAdapters"]
+  output          = "../generated/prisma"
+}
+@schema.prisma 
+64. 
