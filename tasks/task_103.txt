@@ -1,0 +1,45 @@
+Task ID: 103
+Title: Build Auto-Response System
+Description: Create system to auto-respond to incoming messages with payment links
+Priority: high
+Dependencies: [101, 102]
+Status: pending
+
+Details:
+When email/message received, check if sender is trusted. If not, generate Stripe payment link with recipient's price. Send auto-response email with payment link and custom message. Track payment link in database. Handle edge cases like invalid sender addresses.
+
+Auto-response flow:
+1. Message received via email or web form
+2. Check sender against trusted/blocked lists
+3. If payment required, generate Stripe Payment Link
+4. Create auto-response with payment URL
+5. Send response via Resend
+6. Store payment link reference in database
+
+Email template requirements:
+- Professional design matching hide.new branding
+- Clear payment instructions
+- Customizable message from recipient
+- Payment amount clearly displayed
+- Expiration notice for payment link
+- Support/help information
+
+Edge cases to handle:
+- Invalid or spoofed sender addresses
+- Bounced auto-responses
+- Rate limiting for frequent senders
+- Payment link expiration handling
+
+Test Strategy:
+- Test auto-response triggers on message receipt
+- Verify payment links are generated correctly
+- Test custom message templates
+- Verify trusted sender bypass works
+- Test blocked sender rejection
+- Ensure payment amounts match user settings
+
+Subtasks:
+- [ ] Create auto-response email templates
+- [ ] Implement trusted sender checking logic
+- [ ] Generate payment links for messages
+- [ ] Send auto-response emails via Resend

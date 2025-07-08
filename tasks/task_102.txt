@@ -1,0 +1,40 @@
+Task ID: 102
+Title: Implement Email Receiving Infrastructure
+Description: Set up SendGrid inbound parse for receiving emails at username@hide.new
+Priority: high
+Dependencies: [100]
+Status: pending
+
+Details:
+Configure SendGrid account for inbound email parsing. Set up MX records for hide.new domain. Create webhook endpoint to receive parsed emails. Build email parsing logic to extract sender, subject, and body. Store received emails in Message model.
+
+SendGrid Inbound Parse setup:
+- Configure SendGrid to receive emails for @hide.new domain
+- Set up webhook URL for parsed email data
+- Handle multipart email parsing (text and HTML)
+- Extract attachments if needed
+- Parse email headers for metadata
+
+DNS Configuration:
+- MX records pointing to SendGrid
+- SPF records for email authentication
+- DKIM setup for security
+
+Webhook endpoint requirements:
+- Verify SendGrid webhook signatures
+- Parse incoming email data structure
+- Handle various email formats and encodings
+- Store email content securely
+
+Test Strategy:
+- Test email reception with test emails
+- Verify webhook receives and parses email data correctly
+- Confirm messages are stored in database
+- Test various email formats (plain text, HTML, multipart)
+- Verify sender extraction and validation
+
+Subtasks:
+- [ ] Configure SendGrid inbound parse settings
+- [ ] Update DNS records - Configure MX records for hide.new
+- [ ] Create inbound email webhook - /api/inbound-email endpoint
+- [ ] Implement email parsing logic - Extract and store data in Message model

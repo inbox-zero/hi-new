@@ -1,0 +1,486 @@
+{
+  "project": "hide.new - Paid Email Proxy Service",
+  "description": "Transform hi.new into hide.new, a paid email proxy service requiring payment before message delivery",
+  "tasks": [
+    {
+      "id": 100,
+      "title": "Update Database Schema for Payment System",
+      "description": "Migrate database schema to support payment tracking, email proxy, and message storage",
+      "details": "Update Prisma schema with new models: EmailSettings, PaymentLink, Message, TrustedSender, BlockedSender. Add payment-related fields to User model including stripeCustomerId, defaultPrice, customMessage. Update Link model to work with new username-based system.",
+      "testStrategy": "Run Prisma migrations successfully. Test all new models with CRUD operations. Verify relationships between models work correctly.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 100.1,
+          "title": "Create EmailSettings model",
+          "description": "Add EmailSettings model with pricing tiers and auto-response customization",
+          "status": "pending"
+        },
+        {
+          "id": 100.2,
+          "title": "Create PaymentLink model",
+          "description": "Add PaymentLink model to track Stripe payment links and status",
+          "status": "pending"
+        },
+        {
+          "id": 100.3,
+          "title": "Create Message model",
+          "description": "Add Message model to store pending messages awaiting payment",
+          "status": "pending"
+        },
+        {
+          "id": 100.4,
+          "title": "Create TrustedSender and BlockedSender models",
+          "description": "Add models for managing sender allowlists and blocklists",
+          "status": "pending"
+        },
+        {
+          "id": 100.5,
+          "title": "Update User model",
+          "description": "Add Stripe customer ID, default price, and custom message fields",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "title": "Set Up Stripe Integration",
+      "description": "Integrate Stripe for payment processing with Payment Links API",
+      "details": "Create Stripe account, set up API keys in environment variables. Install Stripe SDK. Create utility functions for generating payment links, handling webhooks, and managing customer records. Implement checkout session creation and payment confirmation flows.",
+      "testStrategy": "Test payment link generation in test mode. Verify webhook signature validation. Test successful payment flow end-to-end.",
+      "priority": "high",
+      "dependencies": [100],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 101.1,
+          "title": "Configure Stripe environment",
+          "description": "Set up Stripe account and add API keys to environment variables",
+          "status": "pending"
+        },
+        {
+          "id": 101.2,
+          "title": "Install Stripe SDK",
+          "description": "Add @stripe/stripe-js and stripe packages",
+          "status": "pending"
+        },
+        {
+          "id": 101.3,
+          "title": "Create Stripe utility functions",
+          "description": "Build functions for payment link generation and customer management",
+          "status": "pending"
+        },
+        {
+          "id": 101.4,
+          "title": "Implement Stripe webhook endpoint",
+          "description": "Create /api/stripe/webhook to handle payment confirmations",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "title": "Implement Email Receiving Infrastructure",
+      "description": "Set up SendGrid inbound parse for receiving emails at username@hide.new",
+      "details": "Configure SendGrid account for inbound email parsing. Set up MX records for hide.new domain. Create webhook endpoint to receive parsed emails. Build email parsing logic to extract sender, subject, and body. Store received emails in Message model.",
+      "testStrategy": "Test email reception with test emails. Verify webhook receives and parses email data correctly. Confirm messages are stored in database.",
+      "priority": "high",
+      "dependencies": [100],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 102.1,
+          "title": "Configure SendGrid inbound parse",
+          "description": "Set up SendGrid account and configure inbound parse settings",
+          "status": "pending"
+        },
+        {
+          "id": 102.2,
+          "title": "Update DNS records",
+          "description": "Configure MX records for hide.new to point to SendGrid",
+          "status": "pending"
+        },
+        {
+          "id": 102.3,
+          "title": "Create inbound email webhook",
+          "description": "Build /api/inbound-email endpoint to receive parsed emails",
+          "status": "pending"
+        },
+        {
+          "id": 102.4,
+          "title": "Implement email parsing logic",
+          "description": "Extract and store email data in Message model",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "title": "Build Auto-Response System",
+      "description": "Create system to auto-respond to incoming messages with payment links",
+      "details": "When email/message received, check if sender is trusted. If not, generate Stripe payment link with recipient's price. Send auto-response email with payment link and custom message. Track payment link in database. Handle edge cases like invalid sender addresses.",
+      "testStrategy": "Test auto-response triggers on message receipt. Verify payment links are generated correctly. Test custom message templates.",
+      "priority": "high",
+      "dependencies": [101, 102],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 103.1,
+          "title": "Create auto-response email templates",
+          "description": "Design email templates for payment requests",
+          "status": "pending"
+        },
+        {
+          "id": 103.2,
+          "title": "Implement trusted sender checking",
+          "description": "Check if sender is in trusted list before requiring payment",
+          "status": "pending"
+        },
+        {
+          "id": 103.3,
+          "title": "Generate payment links for messages",
+          "description": "Create unique payment link for each message",
+          "status": "pending"
+        },
+        {
+          "id": 103.4,
+          "title": "Send auto-response emails",
+          "description": "Use Resend to send payment request emails",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "title": "Implement Message Delivery After Payment",
+      "description": "Build system to deliver messages after successful payment",
+      "details": "Listen for Stripe webhook payment confirmations. Match payment to stored message. Update message status to PAID. Deliver message to recipient's real email address. Send confirmation to sender. Handle delivery failures with retry logic.",
+      "testStrategy": "Test payment webhook processing. Verify message delivery after payment. Test retry logic for failed deliveries.",
+      "priority": "high",
+      "dependencies": [103],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 104.1,
+          "title": "Process payment confirmations",
+          "description": "Handle Stripe webhooks for successful payments",
+          "status": "pending"
+        },
+        {
+          "id": 104.2,
+          "title": "Match payments to messages",
+          "description": "Link Stripe session to stored message",
+          "status": "pending"
+        },
+        {
+          "id": 104.3,
+          "title": "Deliver paid messages",
+          "description": "Forward message to recipient's real email",
+          "status": "pending"
+        },
+        {
+          "id": 104.4,
+          "title": "Send payment confirmations",
+          "description": "Notify sender of successful payment and delivery",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 105,
+      "title": "Update User Registration for Username System",
+      "description": "Modify signup flow to claim username@hide.new addresses",
+      "details": "Update registration to validate and claim usernames. Ensure usernames are unique and valid for email addresses. Migrate existing users' slugs to usernames. Update all references from slug-based to username-based system.",
+      "testStrategy": "Test username validation during signup. Verify uniqueness constraints. Test migration of existing users.",
+      "priority": "high",
+      "dependencies": [100],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 105.1,
+          "title": "Update signup form",
+          "description": "Add username field with validation",
+          "status": "pending"
+        },
+        {
+          "id": 105.2,
+          "title": "Implement username validation",
+          "description": "Ensure usernames are valid for email addresses",
+          "status": "pending"
+        },
+        {
+          "id": 105.3,
+          "title": "Migrate existing users",
+          "description": "Convert current slugs to usernames",
+          "status": "pending"
+        },
+        {
+          "id": 105.4,
+          "title": "Update routing",
+          "description": "Change from /[slug] to /[username] throughout app",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 106,
+      "title": "Create Email Settings Dashboard",
+      "description": "Build UI for users to manage email proxy settings",
+      "details": "Create dashboard page for email settings. Allow users to set default price, customize auto-response message, manage trusted senders list, manage blocked senders list. Add import/export functionality for sender lists.",
+      "testStrategy": "Test all CRUD operations for settings. Verify settings persist correctly. Test import/export functionality.",
+      "priority": "medium",
+      "dependencies": [105],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 106.1,
+          "title": "Create settings page layout",
+          "description": "Build main email settings dashboard UI",
+          "status": "pending"
+        },
+        {
+          "id": 106.2,
+          "title": "Implement pricing configuration",
+          "description": "Allow users to set and update default price",
+          "status": "pending"
+        },
+        {
+          "id": 106.3,
+          "title": "Build trusted sender management",
+          "description": "UI for adding/removing trusted senders",
+          "status": "pending"
+        },
+        {
+          "id": 106.4,
+          "title": "Build blocked sender management",
+          "description": "UI for blocking unwanted senders",
+          "status": "pending"
+        },
+        {
+          "id": 106.5,
+          "title": "Add auto-response customization",
+          "description": "Allow users to customize payment request message",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 107,
+      "title": "Build Message Inbox",
+      "description": "Create UI for users to view received messages and payment status",
+      "details": "Build inbox page showing all received messages. Display payment status (pending, paid, expired). Show sender information and message preview. Add filters for paid/unpaid messages. Include message search functionality.",
+      "testStrategy": "Test message display with various statuses. Verify filtering works correctly. Test search functionality.",
+      "priority": "medium",
+      "dependencies": [104],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 107.1,
+          "title": "Create inbox page",
+          "description": "Build main inbox UI with message list",
+          "status": "pending"
+        },
+        {
+          "id": 107.2,
+          "title": "Display payment status",
+          "description": "Show clear indicators for message payment state",
+          "status": "pending"
+        },
+        {
+          "id": 107.3,
+          "title": "Add message filters",
+          "description": "Filter by paid, unpaid, date range",
+          "status": "pending"
+        },
+        {
+          "id": 107.4,
+          "title": "Implement message search",
+          "description": "Search by sender, subject, or content",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "title": "Implement Payment Analytics",
+      "description": "Add analytics dashboard for payment tracking",
+      "details": "Create analytics page showing total revenue, number of paid messages, conversion rate, average payment amount. Add time-based charts for payment trends. Export functionality for financial records.",
+      "testStrategy": "Verify analytics calculations are accurate. Test chart rendering with various data sets. Test export functionality.",
+      "priority": "medium",
+      "dependencies": [104, 107],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 108.1,
+          "title": "Create analytics dashboard",
+          "description": "Build main analytics page layout",
+          "status": "pending"
+        },
+        {
+          "id": 108.2,
+          "title": "Calculate payment metrics",
+          "description": "Implement revenue and conversion calculations",
+          "status": "pending"
+        },
+        {
+          "id": 108.3,
+          "title": "Add payment charts",
+          "description": "Visualize payment trends over time",
+          "status": "pending"
+        },
+        {
+          "id": 108.4,
+          "title": "Build export functionality",
+          "description": "Export payment data for accounting",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 109,
+      "title": "Add Domain Migration",
+      "description": "Migrate from hi.new to hide.new domain",
+      "details": "Register hide.new domain. Set up DNS records. Configure email routing for @hide.new addresses. Implement redirects from hi.new to hide.new. Update all hardcoded domain references in codebase.",
+      "testStrategy": "Test domain resolution. Verify email routing works. Test redirects preserve functionality.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 109.1,
+          "title": "Register hide.new domain",
+          "description": "Acquire domain and configure nameservers",
+          "status": "pending"
+        },
+        {
+          "id": 109.2,
+          "title": "Configure DNS records",
+          "description": "Set up A, CNAME, MX records for hide.new",
+          "status": "pending"
+        },
+        {
+          "id": 109.3,
+          "title": "Update codebase references",
+          "description": "Replace all hi.new references with hide.new",
+          "status": "pending"
+        },
+        {
+          "id": 109.4,
+          "title": "Implement redirects",
+          "description": "Redirect hi.new traffic to hide.new",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 110,
+      "title": "Implement Security Features",
+      "description": "Add security measures for payment and message handling",
+      "details": "Implement message encryption at rest. Add sender email verification. Implement payment fraud detection. Add rate limiting for payment link generation. Set up monitoring for suspicious activity.",
+      "testStrategy": "Test encryption/decryption of messages. Verify email verification flow. Test rate limiting triggers correctly.",
+      "priority": "high",
+      "dependencies": [104],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 110.1,
+          "title": "Encrypt stored messages",
+          "description": "Implement encryption for message content at rest",
+          "status": "pending"
+        },
+        {
+          "id": 110.2,
+          "title": "Add sender verification",
+          "description": "Verify sender email ownership before delivery",
+          "status": "pending"
+        },
+        {
+          "id": 110.3,
+          "title": "Implement fraud detection",
+          "description": "Monitor for suspicious payment patterns",
+          "status": "pending"
+        },
+        {
+          "id": 110.4,
+          "title": "Add payment link rate limiting",
+          "description": "Prevent spam payment link generation",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 111,
+      "title": "Create API for Programmatic Access",
+      "description": "Build API endpoints for external integrations",
+      "details": "Create API endpoints for sending messages programmatically. Add API key authentication. Implement rate limiting per API key. Build API documentation. Add webhook notifications for message status updates.",
+      "testStrategy": "Test API authentication and authorization. Verify rate limiting works per key. Test webhook delivery.",
+      "priority": "low",
+      "dependencies": [104],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 111.1,
+          "title": "Create message sending API",
+          "description": "POST /api/v1/messages endpoint",
+          "status": "pending"
+        },
+        {
+          "id": 111.2,
+          "title": "Implement API authentication",
+          "description": "Add API key validation middleware",
+          "status": "pending"
+        },
+        {
+          "id": 111.3,
+          "title": "Add API rate limiting",
+          "description": "Implement per-key rate limits",
+          "status": "pending"
+        },
+        {
+          "id": 111.4,
+          "title": "Build API documentation",
+          "description": "Create OpenAPI spec and docs site",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 112,
+      "title": "Implement Subscription Tiers",
+      "description": "Add premium subscription options for advanced features",
+      "details": "Create free tier with limited messages. Add pro tier with unlimited messages and analytics. Implement team tier with multiple users. Set up Stripe subscriptions. Build upgrade/downgrade flows.",
+      "testStrategy": "Test subscription creation and management. Verify feature gating works correctly. Test billing cycles.",
+      "priority": "low",
+      "dependencies": [101, 108],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 112.1,
+          "title": "Define subscription tiers",
+          "description": "Create tier structure and feature matrix",
+          "status": "pending"
+        },
+        {
+          "id": 112.2,
+          "title": "Set up Stripe subscriptions",
+          "description": "Configure subscription products in Stripe",
+          "status": "pending"
+        },
+        {
+          "id": 112.3,
+          "title": "Build upgrade flow",
+          "description": "Create UI for subscription upgrades",
+          "status": "pending"
+        },
+        {
+          "id": 112.4,
+          "title": "Implement feature gating",
+          "description": "Restrict features based on subscription",
+          "status": "pending"
+        }
+      ]
+    }
+  ]
+}

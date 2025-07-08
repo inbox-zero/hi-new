@@ -1,0 +1,30 @@
+Task ID: 100
+Title: Update Database Schema for Payment System
+Description: Migrate database schema to support payment tracking, email proxy, and message storage
+Priority: high
+Dependencies: []
+Status: pending
+
+Details:
+Update Prisma schema with new models: EmailSettings, PaymentLink, Message, TrustedSender, BlockedSender. Add payment-related fields to User model including stripeCustomerId, defaultPrice, customMessage. Update Link model to work with new username-based system.
+
+The schema changes should include:
+- EmailSettings: Store user's email proxy configuration including default price, auto-response settings
+- PaymentLink: Track Stripe payment links and their status for each message
+- Message: Store incoming messages with sender info, content, and payment status
+- TrustedSender: Maintain list of senders who bypass payment requirements
+- BlockedSender: List of blocked email addresses
+- User model updates: Add Stripe customer ID, default pricing, custom messages
+
+Test Strategy:
+- Run Prisma migrations successfully
+- Test all new models with CRUD operations
+- Verify relationships between models work correctly
+- Ensure existing data is preserved during migration
+
+Subtasks:
+- [ ] Create EmailSettings model with pricing tiers and auto-response customization
+- [ ] Create PaymentLink model to track Stripe payment links and status
+- [ ] Create Message model to store pending messages awaiting payment
+- [ ] Create TrustedSender and BlockedSender models for sender management
+- [ ] Update User model with Stripe fields and payment settings

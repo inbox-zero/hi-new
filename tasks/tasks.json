@@ -459,6 +459,50 @@
       "dependencies": [],
       "priority": "low",
       "subtasks": []
+    },
+    {
+      "id": 100,
+      "title": "Update Database Schema for Payment System",
+      "description": "Migrate database schema to support payment tracking, email proxy, and message storage",
+      "details": "Update Prisma schema with new models: EmailSettings, PaymentLink, Message, TrustedSender, BlockedSender. Add payment-related fields to User model including stripeCustomerId, defaultPrice, customMessage. Update Link model to work with new username-based system.",
+      "testStrategy": "Run Prisma migrations successfully. Test all new models with CRUD operations. Verify relationships between models work correctly.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 101,
+      "title": "Set Up Stripe Integration",
+      "description": "Integrate Stripe for payment processing with Payment Links API",
+      "details": "Create Stripe account, set up API keys in environment variables. Install Stripe SDK. Create utility functions for generating payment links, handling webhooks, and managing customer records.",
+      "testStrategy": "Test payment link generation in test mode. Verify webhook signature validation. Test successful payment flow end-to-end.",
+      "priority": "high",
+      "dependencies": [100],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 102,
+      "title": "Implement Email Receiving Infrastructure",
+      "description": "Set up SendGrid inbound parse for receiving emails at username@hide.new",
+      "details": "Configure SendGrid account for inbound email parsing. Set up MX records for hide.new domain. Create webhook endpoint to receive parsed emails.",
+      "testStrategy": "Test email reception with test emails. Verify webhook receives and parses email data correctly.",
+      "priority": "high",
+      "dependencies": [100],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 103,
+      "title": "Build Auto-Response System",
+      "description": "Create system to auto-respond to incoming messages with payment links",
+      "details": "When email/message received, check if sender is trusted. If not, generate Stripe payment link with recipient's price. Send auto-response email with payment link.",
+      "testStrategy": "Test auto-response triggers on message receipt. Verify payment links are generated correctly.",
+      "priority": "high",
+      "dependencies": [101, 102],
+      "status": "pending",
+      "subtasks": []
     }
   ]
 }
